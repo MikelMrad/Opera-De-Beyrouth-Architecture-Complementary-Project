@@ -1,0 +1,175 @@
+.confirmation {
+  min-height: 100vh;
+  /* No padding-top — dark hero fills behind the transparent navbar */
+  background-color: var(--color-offwhite);
+  display: flex;
+  flex-direction: column;
+}
+
+.confirmation__hero {
+  background-color: var(--color-navy);
+  padding: calc(80px + 5rem) 2rem 4rem;
+  text-align: center;
+}
+
+.confirmation__check {
+  font-size: 3rem;
+  margin-bottom: 1.25rem;
+  color: var(--color-blue-light);
+}
+
+.confirmation__title {
+  /* h1 → --font-display via globals.css */
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: var(--color-offwhite);
+  margin-bottom: 0.75rem;
+}
+
+.confirmation__subtitle {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--color-blue-mid);
+}
+
+.confirmation__body {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 2rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  flex: 1;
+}
+
+.confirmation__card {
+  background-color: #fff;
+  border: 1px solid rgba(53, 88, 114, 0.12);
+  padding: 2rem;
+}
+
+.confirmation__card-title {
+  /* h2 → --font-display via globals.css */
+  font-size: 1.75rem;
+  color: var(--color-navy);
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(53, 88, 114, 0.1);
+}
+
+.confirmation__detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid rgba(53, 88, 114, 0.07);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.9rem;
+}
+
+.confirmation__detail-label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--color-navy);
+  opacity: 0.6;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.confirmation__detail-value {
+  color: var(--color-navy);
+  font-weight: 400;
+  text-align: right;
+}
+
+.confirmation__seat-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+  justify-content: flex-end;
+}
+
+.confirmation__seat-chip {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background-color: var(--color-navy);
+  color: var(--color-blue-light);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+}
+
+.confirmation__3d-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.confirmation__3d-title {
+  /* h2 → --font-display via globals.css */
+  font-size: 1.75rem;
+  color: var(--color-navy);
+}
+
+.confirmation__3d-btn {
+  align-self: flex-start;
+  display: inline-block;
+  padding: 0.85rem 2rem;
+  background-color: var(--color-navy);
+  color: var(--color-offwhite);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.confirmation__3d-btn:hover {
+  background-color: var(--color-blue-mid);
+}
+
+.confirmation__back-btn {
+  align-self: flex-start;
+  display: inline-block;
+  padding: 0.85rem 2rem;
+  border: 1px solid var(--color-navy);
+  color: var(--color-navy);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.confirmation__back-btn:hover {
+  background-color: var(--color-navy);
+  color: var(--color-offwhite);
+}
+
+.confirmation__actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.confirmation__loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 1rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-blue-mid);
+}

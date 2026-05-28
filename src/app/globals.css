@@ -1,0 +1,134 @@
+/* =========================================================
+   Opéra de Beyrouth — Global Styles
+   ========================================================= */
+
+:root {
+  --color-navy: #355872;
+  --color-blue-mid: #7AAACE;
+  --color-blue-light: #9CD5FF;
+  --color-offwhite: #F7F8F0;
+
+  /* Injected by next/font in layout.tsx */
+  --font-display: 'MonteCarlo', cursive;
+  --font-heading: 'Cormorant Garamond', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 300;
+  background-color: var(--color-offwhite);
+  color: var(--color-navy);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Titles — MonteCarlo (display/script) */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+/* Subheadings — Cormorant Garamond */
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Labels & buttons default to Cormorant Garamond */
+label,
+button,
+.label,
+.btn {
+  font-family: var(--font-heading);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+p {
+  font-family: var(--font-body);
+  font-weight: 300;
+}
+
+/* MUI global overrides */
+.MuiButton-root {
+  font-family: var(--font-heading) !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  border-radius: 2px !important;
+}
+
+.MuiTextField-root .MuiOutlinedInput-root {
+  border-radius: 2px !important;
+  font-family: var(--font-body) !important;
+  font-weight: 300 !important;
+}
+
+.MuiInputLabel-root {
+  font-family: var(--font-heading) !important;
+  font-weight: 300 !important;
+}
+
+/* =========================================================
+   Scroll animation initial states
+   GSAP reads these and animates them to their final values.
+   Elements with these classes start invisible / offset.
+   ========================================================= */
+
+.anim-fade-up {
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+.anim-fade-in {
+  opacity: 0;
+}
+
+.anim-split-reveal {
+  overflow: hidden;
+}
+
+.anim-scale-in {
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+/* =========================================================
+   Utility
+   ========================================================= */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

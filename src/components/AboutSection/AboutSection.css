@@ -1,0 +1,161 @@
+.about {
+  padding: 7rem 2rem;
+  background-color: var(--color-offwhite);
+}
+
+.about__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about__header {
+  text-align: center;
+  margin-bottom: 5rem;
+}
+
+.about__label {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-blue-mid);
+  margin-bottom: 1rem;
+}
+
+.about__title {
+  /* h2 → --font-display via globals.css; GSAP drives clip-path wipe */
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  color: var(--color-navy);
+  margin-bottom: 1.5rem;
+}
+
+.about__intro {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 1.05rem;
+  color: var(--color-navy);
+  max-width: 640px;
+  margin: 0 auto;
+  opacity: 0.8;
+  font-style: italic;
+}
+
+/* Image + text row */
+.about__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-bottom: 5rem;
+}
+
+.about__row--reverse {
+  direction: rtl;
+}
+
+.about__row--reverse > * {
+  direction: ltr;
+}
+
+/* IMAGE PLACEHOLDER BLOCKS
+   Replace background-color with background-image once assets are ready */
+.about__image-slot {
+  min-height: 380px;
+  background-color: var(--color-navy);
+  display: flex;
+  align-items: flex-end;
+  padding: 1rem 1.25rem;
+}
+
+.about__image-slot--2 {
+  /* IMAGE_2: Side view of opera exterior */
+}
+
+.about__image-slot--3 {
+  /* IMAGE_3: Interior architectural render */
+}
+
+.about__image-slot--4 {
+  /* IMAGE_4: Stage close-up */
+  grid-column: 1 / -1;
+  min-height: 460px;
+}
+
+.about__image-caption {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--color-blue-light);
+  opacity: 0.65;
+  font-style: italic;
+}
+
+.about__text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.about__text h3 {
+  /* h3 → --font-display via globals.css */
+  font-size: 2rem;
+  color: var(--color-navy);
+}
+
+.about__text p {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.975rem;
+  color: var(--color-navy);
+  opacity: 0.8;
+  line-height: 1.8;
+}
+
+/* Stats row */
+.about__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  border-top: 1px solid rgba(122, 170, 206, 0.4);
+  padding-top: 4rem;
+  margin-top: 2rem;
+}
+
+.about__stat {
+  text-align: center;
+}
+
+.about__stat-number {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 400;
+  color: var(--color-navy);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.about__stat-label {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-blue-mid);
+}
+
+@media (max-width: 768px) {
+  .about__row {
+    grid-template-columns: 1fr;
+    direction: ltr;
+  }
+
+  .about__row--reverse {
+    direction: ltr;
+  }
+
+  .about__stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -1,0 +1,131 @@
+.reserve {
+  min-height: 100vh;
+  /* No padding-top here — .reserve__hero is dark navy and fills behind the
+     transparent navbar, so we push the navbar clearance into the hero's top padding. */
+  background-color: var(--color-offwhite);
+}
+
+.reserve__hero {
+  background-color: var(--color-navy);
+  /* 80px = fixed navbar height  +  5rem visual breathing room */
+  padding: calc(80px + 5rem) 2rem 4rem;
+  text-align: center;
+}
+
+.reserve__hero-label {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-blue-mid);
+  margin-bottom: 0.75rem;
+}
+
+.reserve__hero-title {
+  /* h1 → --font-display via globals.css */
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  color: var(--color-offwhite);
+}
+
+.reserve__body {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 3rem 2rem 5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.reserve__form-card {
+  background-color: #fff;
+  border: 1px solid rgba(53, 88, 114, 0.12);
+  padding: 2rem 2rem 2.5rem;
+}
+
+.reserve__form-title {
+  /* h2 → --font-display via globals.css */
+  font-size: 1.75rem;
+  color: var(--color-navy);
+  margin-bottom: 1.5rem;
+}
+
+.reserve__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.reserve__form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.reserve__error {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.85rem;
+  color: #c0392b;
+  padding: 0.75rem 1rem;
+  background-color: #fdf0ef;
+  border-left: 3px solid #c0392b;
+}
+
+.reserve__submit-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.reserve__seat-summary {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.875rem;
+  color: var(--color-navy);
+  opacity: 0.75;
+}
+
+.reserve__submit-btn {
+  padding: 0.9rem 2.5rem;
+  background-color: var(--color-navy);
+  color: var(--color-offwhite);
+  border: none;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.reserve__submit-btn:hover:not(:disabled) {
+  background-color: var(--color-blue-mid);
+}
+
+.reserve__submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.reserve__loading {
+  padding: 4rem 2rem;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 1rem;
+  color: var(--color-blue-mid);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  background-color: var(--color-offwhite);
+}
+
+@media (max-width: 580px) {
+  .reserve__form-row {
+    grid-template-columns: 1fr;
+  }
+}

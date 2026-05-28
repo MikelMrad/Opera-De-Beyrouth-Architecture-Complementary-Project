@@ -1,0 +1,10 @@
+/* SeatMap2 uses the same visual system as SeatMap.
+   Shared seat classes (.seat, .seat--available, etc.) are defined in SeatMap.css
+   and imported via the parent page. Any SeatMap2-specific overrides live here. */
+
+.seatmap2__wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

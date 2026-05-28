@@ -1,0 +1,77 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 3rem;
+
+  /* Starts transparent; transitions to navy on scroll */
+  background-color: transparent;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  transition:
+    background-color 0.4s ease,
+    backdrop-filter 0.4s ease,
+    padding 0.4s ease;
+}
+
+/* Scrolled state — toggled via JS scroll listener */
+.navbar--scrolled {
+  background-color: rgba(53, 88, 114, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0.875rem 3rem;
+}
+
+.navbar__logo {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--color-offwhite);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.navbar__logo:hover {
+  opacity: 0.8;
+}
+
+.navbar__links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.navbar__link {
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  color: var(--color-blue-light);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.navbar__link:hover {
+  color: var(--color-offwhite);
+}
+
+@media (max-width: 640px) {
+  .navbar,
+  .navbar--scrolled {
+    padding: 0.875rem 1.25rem;
+  }
+
+  .navbar__links {
+    gap: 1.25rem;
+  }
+
+  .navbar__link {
+    font-size: 0.8rem;
+  }
+}
