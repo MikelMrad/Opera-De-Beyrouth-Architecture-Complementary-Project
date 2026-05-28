@@ -9,12 +9,12 @@ import {
   where,
   serverTimestamp,
 } from 'firebase/firestore';
-import { db } from './firebase';
+import { getDb } from './firebase';
 import type { Auditorium } from '@/types';
 
 export async function getReservedSeats(auditorium: string): Promise<string[]> {
   const q = query(
-    collection(db, 'seats'),
+    collection(getDb(), 'seats'),
     where('auditorium', '==', auditorium),
     where('reserved', '==', true)
   );
@@ -28,7 +28,8 @@ export async function reserveSeats(
   name: string,
   email: string
 ): Promise<void> {
-  // Write reservation document
+  const db = getDb();
+
   await addDoc(collection(db, 'reservations'), {
     seatIds,
     auditorium,
@@ -37,7 +38,6 @@ export async function reserveSeats(
     timestamp: serverTimestamp(),
   });
 
-  // Update each seat document
   const updates = seatIds.map((seatId) =>
     setDoc(doc(db, 'seats', `${auditorium}_${seatId}`), {
       seatId,
@@ -54,7 +54,7 @@ export function subscribeToSeats(
   callback: (ids: string[], error?: Error) => void
 ): () => void {
   const q = query(
-    collection(db, 'seats'),
+    collection(getDb(), 'seats'),
     where('auditorium', '==', auditorium),
     where('reserved', '==', true)
   );
@@ -66,8 +66,6 @@ export function subscribeToSeats(
       callback(reservedIds);
     },
     (err) => {
-      // Surface Firestore errors (permission denied, missing index, etc.)
-      // so the caller can exit the loading state gracefully.
       console.error('[seats] onSnapshot error:', err);
       callback([], err);
     }
