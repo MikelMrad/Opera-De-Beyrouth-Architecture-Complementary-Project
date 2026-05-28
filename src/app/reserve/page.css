@@ -1,13 +1,10 @@
 .reserve {
   min-height: 100vh;
-  /* No padding-top here — .reserve__hero is dark navy and fills behind the
-     transparent navbar, so we push the navbar clearance into the hero's top padding. */
   background-color: var(--color-offwhite);
 }
 
 .reserve__hero {
   background-color: var(--color-navy);
-  /* 80px = fixed navbar height  +  5rem visual breathing room */
   padding: calc(80px + 5rem) 2rem 4rem;
   text-align: center;
 }
@@ -23,8 +20,7 @@
 }
 
 .reserve__hero-title {
-  /* h1 → --font-display via globals.css */
-  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-size: clamp(2rem, 6vw, 5rem);
   color: var(--color-offwhite);
 }
 
@@ -44,7 +40,6 @@
 }
 
 .reserve__form-title {
-  /* h2 → --font-display via globals.css */
   font-size: 1.75rem;
   color: var(--color-navy);
   margin-bottom: 1.5rem;
@@ -101,6 +96,8 @@
   text-transform: uppercase;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  /* Full-width tap target on mobile */
+  white-space: nowrap;
 }
 
 .reserve__submit-btn:hover:not(:disabled) {
@@ -124,8 +121,34 @@
   background-color: var(--color-offwhite);
 }
 
+/* ── Mobile ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .reserve__hero {
+    padding: calc(70px + 3rem) 1.5rem 3rem;
+  }
+
+  .reserve__body {
+    padding: 2rem 1.25rem 4rem;
+    gap: 2rem;
+  }
+
+  .reserve__form-card {
+    padding: 1.5rem 1.25rem 2rem;
+  }
+}
+
 @media (max-width: 580px) {
   .reserve__form-row {
     grid-template-columns: 1fr;
+  }
+
+  .reserve__submit-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .reserve__submit-btn {
+    width: 100%;
+    text-align: center;
   }
 }

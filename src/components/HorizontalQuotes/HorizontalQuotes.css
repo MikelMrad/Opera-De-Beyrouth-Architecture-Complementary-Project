@@ -1,7 +1,7 @@
 /* =============================================================
-   Horizontal Quotes — GSAP-pinned horizontal scroll strip
-   The .horiz-scroll-section is pinned by ScrollTrigger while
-   the .horiz-scroll-track translates on the x-axis.
+   Horizontal Quotes
+   Desktop: GSAP-pinned horizontal scroll strip.
+   Mobile (≤768px): vertical card stack, no pin.
    ============================================================= */
 
 .horiz-scroll-section {
@@ -12,12 +12,10 @@
 
 .horiz-scroll-track {
   display: flex;
-  /* Width drives how far ScrollTrigger scrolls; set by JS at runtime */
   width: max-content;
   align-items: stretch;
 }
 
-/* Individual quote card */
 .quote-card {
   width: 100vw;
   min-height: 80vh;
@@ -35,7 +33,6 @@
   border-right: none;
 }
 
-/* Subtle index number watermark */
 .quote-card__index {
   position: absolute;
   top: 3rem;
@@ -50,7 +47,6 @@
   opacity: 0.4;
 }
 
-/* Decorative divider */
 .quote-card__ornament {
   width: 40px;
   height: 1px;
@@ -59,20 +55,18 @@
   opacity: 0.5;
 }
 
-/* The quote itself — large italic Cormorant Garamond */
 .quote-card__text {
   font-family: var(--font-heading);
-  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-size: clamp(1.4rem, 3.5vw, 2.5rem);
   font-weight: 300;
   font-style: italic;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--color-offwhite);
   text-align: center;
   max-width: 680px;
   letter-spacing: 0.01em;
 }
 
-/* Opening guillemet */
 .quote-card__text::before {
   content: '«\00a0';
   font-style: normal;
@@ -80,7 +74,6 @@
   opacity: 0.6;
 }
 
-/* Closing guillemet */
 .quote-card__text::after {
   content: '\00a0»';
   font-style: normal;
@@ -99,7 +92,6 @@
   opacity: 0.55;
 }
 
-/* Progress indicator dots */
 .horiz-scroll-dots {
   position: absolute;
   bottom: 2rem;
@@ -116,5 +108,37 @@
   border-radius: 50%;
   background-color: var(--color-blue-mid);
   opacity: 0.3;
-  transition: opacity 0.3s ease;
+}
+
+/* ── Mobile: disable horizontal scroll, show as vertical stack ── */
+@media (max-width: 768px) {
+  .horiz-scroll-section {
+    overflow: visible;
+  }
+
+  .horiz-scroll-track {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .quote-card {
+    width: 100%;
+    min-height: auto;
+    padding: 4.5rem 2rem 4rem;
+    border-right: none;
+    border-bottom: 1px solid rgba(122, 170, 206, 0.12);
+  }
+
+  .quote-card:last-child {
+    border-bottom: none;
+  }
+
+  .quote-card__text {
+    font-size: clamp(1.3rem, 5vw, 1.7rem);
+  }
+
+  /* Hide dot strip on mobile (irrelevant for vertical layout) */
+  .horiz-scroll-dots {
+    display: none;
+  }
 }

@@ -35,6 +35,12 @@
   gap: 1.5rem;
 }
 
+@media (max-width: 768px) {
+  .home__auditoriums {
+    padding: 4rem 1.5rem;
+  }
+}
+
 @media (max-width: 640px) {
   .home__auditoriums-grid {
     grid-template-columns: 1fr;

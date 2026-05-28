@@ -24,6 +24,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Prevent tap highlight flicker on mobile */
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -34,6 +36,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent horizontal overflow on mobile */
+  overflow-x: hidden;
 }
 
 /* Titles — MonteCarlo (display/script) */
@@ -54,7 +58,6 @@ h6 {
   line-height: 1.2;
 }
 
-/* Labels & buttons default to Cormorant Garamond */
 label,
 button,
 .label,
@@ -98,8 +101,6 @@ p {
 
 /* =========================================================
    Scroll animation initial states
-   GSAP reads these and animates them to their final values.
-   Elements with these classes start invisible / offset.
    ========================================================= */
 
 .anim-fade-up {

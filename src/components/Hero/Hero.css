@@ -51,12 +51,11 @@
 
 .hero__title {
   /* Uses --font-display (MonteCarlo) from globals.css h1 rule */
-  font-size: clamp(3.5rem, 8vw, 7rem);
+  font-size: clamp(2.75rem, 8vw, 7rem);
   font-weight: 400;
   color: var(--color-offwhite);
   letter-spacing: 0.01em;
   margin-bottom: 1.25rem;
-  /* Overflow visible so descenders aren't clipped during animation */
   overflow: visible;
   display: block;
 }
@@ -152,4 +151,21 @@
 @keyframes scrollPulse {
   0%, 100% { opacity: 0.35; }
   50%       { opacity: 1; }
+}
+
+@media (max-width: 480px) {
+  .hero__content {
+    padding: 1.25rem;
+  }
+
+  .hero__cta-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero__cta-btn {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+  }
 }

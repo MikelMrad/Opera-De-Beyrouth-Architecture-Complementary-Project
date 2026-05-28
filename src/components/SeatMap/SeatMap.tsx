@@ -200,6 +200,9 @@ export default function SeatMap({
 
   return (
     <div className="seatmap">
+      <p className="seatmap__scroll-hint" aria-hidden="true">
+        ← Faire défiler pour voir le plan →
+      </p>
       <div className="seatmap__svg-wrapper">
         <svg
           className="seatmap__svg"

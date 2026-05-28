@@ -173,3 +173,44 @@
   text-transform: uppercase;
   color: var(--color-blue-mid);
 }
+
+/* ── Mobile ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .confirmation__hero {
+    padding: calc(70px + 3rem) 1.5rem 3rem;
+  }
+
+  .confirmation__body {
+    padding: 2rem 1.25rem 4rem;
+    gap: 2rem;
+  }
+
+  .confirmation__card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .confirmation__actions {
+    flex-direction: column;
+  }
+
+  .confirmation__back-btn,
+  .confirmation__3d-btn {
+    align-self: stretch;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .confirmation__detail-row {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .confirmation__detail-value {
+    text-align: left;
+  }
+
+  .confirmation__seat-list {
+    justify-content: flex-start;
+  }
+}

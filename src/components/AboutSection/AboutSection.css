@@ -146,16 +146,41 @@
 }
 
 @media (max-width: 768px) {
+  .about {
+    padding: 5rem 1.5rem;
+  }
+
   .about__row {
     grid-template-columns: 1fr;
     direction: ltr;
+    gap: 2rem;
+    margin-bottom: 3rem;
   }
 
   .about__row--reverse {
     direction: ltr;
   }
 
+  .about__image-slot {
+    min-height: 260px;
+  }
+
+  .about__image-slot--4 {
+    min-height: 280px;
+  }
+
   .about__stats {
     grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .about__stat-number {
+    font-size: 3rem;
   }
 }

@@ -93,11 +93,12 @@ export function useScrollAnimations(pathname: string) {
 
         /* ----------------------------------------------------------
            4. HORIZONTAL SCROLL SECTION
+           Only pinned on desktop — mobile uses a CSS vertical stack.
         ---------------------------------------------------------- */
         const horizSection = document.querySelector<HTMLElement>('.horiz-scroll-section');
         const horizTrack = document.querySelector<HTMLElement>('.horiz-scroll-track');
 
-        if (horizSection && horizTrack) {
+        if (horizSection && horizTrack && window.innerWidth > 768) {
           const getScrollDistance = () =>
             horizTrack.scrollWidth - horizTrack.offsetWidth;
 

@@ -10,6 +10,9 @@
   width: 100%;
   max-width: 860px;
   overflow-x: auto;
+  /* Smooth momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 }
 
 .seatmap__svg {
@@ -158,8 +161,31 @@
   color: var(--color-blue-mid);
 }
 
+/* Scroll hint — hidden on desktop, visible on mobile */
+.seatmap__scroll-hint {
+  display: none;
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--color-blue-mid);
+  opacity: 0.6;
+}
+
+/* Selection bar stacks on very narrow screens */
 @media (max-width: 640px) {
   .seatmap__legend {
     gap: 1.25rem;
+  }
+
+  .seatmap__scroll-hint {
+    display: block;
+  }
+
+  .seatmap__selection-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    font-size: 0.85rem;
   }
 }
