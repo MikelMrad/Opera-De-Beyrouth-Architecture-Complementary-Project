@@ -1,7 +1,9 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import type { SeatStatus } from '@/types';
+import SeatViewModal from '@/components/SeatViewModal/SeatViewModal';
+import { seatViews, getClosestView } from '@/lib/seatViews';
 import './SeatMap2.css';
 
 interface SeatDef {
@@ -166,6 +168,9 @@ export default function SeatMap2({
   onSeatClick,
   maxSelection = 4,
 }: SeatMapProps) {
+  const [modal, setModal] = useState<{ id: string; section: string; imgSrc: string } | null>(null);
+  const [bubble, setBubble] = useState<{ id: string; section: string; imgSrc: string; hasOwn: boolean } | null>(null);
+
   const layout = useMemo(() => buildLayout(), []);
 
   const seat = SEAT_SIZE;
@@ -255,11 +260,19 @@ export default function SeatMap2({
                 aria-label={`Seat ${s.id}, ${status}`}
                 aria-pressed={status === 'selected'}
                 tabIndex={status === 'reserved' ? -1 : 0}
-                onClick={() => status !== 'reserved' && onSeatClick(s.id)}
+                onClick={() => {
+                  if (status === 'reserved') return;
+                  onSeatClick(s.id);
+                  const imgSrc = getClosestView(s.id, seatViews);
+                  if (imgSrc) setBubble({ id: s.id, section: s.section, imgSrc, hasOwn: !!seatViews[s.id] });
+                }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    if (status !== 'reserved') onSeatClick(s.id);
+                    if (status === 'reserved') return;
+                    onSeatClick(s.id);
+                    const imgSrc = getClosestView(s.id, seatViews);
+                    if (imgSrc) setBubble({ id: s.id, section: s.section, imgSrc, hasOwn: !!seatViews[s.id] });
                   }
                 }}
               />
@@ -292,6 +305,27 @@ export default function SeatMap2({
           Reserved
         </li>
       </ul>
+
+      {bubble && (
+        <>
+          <div className="svm__bubble-backdrop" onClick={() => setBubble(null)} />
+          <button
+            className="svm__bubble"
+            onClick={() => { setModal({ id: bubble.id, section: bubble.section, imgSrc: bubble.imgSrc }); setBubble(null); }}
+          >
+            {bubble.hasOwn ? 'See seating in 3D' : 'See similar view'}
+          </button>
+        </>
+      )}
+
+      {modal && (
+        <SeatViewModal
+          seatId={modal.id}
+          section={modal.section}
+          imgSrc={modal.imgSrc}
+          onClose={() => setModal(null)}
+        />
+      )}
     </div>
   );
 }

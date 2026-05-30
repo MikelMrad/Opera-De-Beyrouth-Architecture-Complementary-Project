@@ -130,6 +130,7 @@ export default function ReserveContent() {
             />
           ) : (
             <SeatMap2
+              auditorium="chamber"
               reservedIds={reservedIds}
               selectedIds={selectedIds}
               onSeatClick={handleSeatClick}
