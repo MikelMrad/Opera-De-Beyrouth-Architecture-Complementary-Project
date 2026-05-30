@@ -83,7 +83,7 @@ const MAIN = {
   ],
   nFront: 10,
   pitch: 34.3,                // seat spacing along the arc
-  aisle: 52,                  // extra aisle gap (arc length)
+  aisle: 100,                  // extra aisle gap (arc length)
   leftFront:  [13, 12, 13, 13, 13, 14, 14, 15, 15, 16],
   rightFront: [12, 13, 13, 13, 14, 14, 15, 15, 16, 16],
   leftBack:   [16, 16, 16, 15, 15, 14, 13, 12],

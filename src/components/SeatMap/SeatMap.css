@@ -46,11 +46,11 @@
 }
 
 .seatmap__row-label {
-  fill: var(--color-navy);
+  fill: #000000;
   font-family: var(--font-heading);
-  font-weight: 300;
-  font-size: 11px;
-  opacity: 0.55;
+  font-weight: 500;
+  font-size: 14px;
+  opacity: 1.55;
 }
 
 /* Seat base styles */

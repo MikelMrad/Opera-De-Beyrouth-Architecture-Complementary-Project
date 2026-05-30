@@ -1,10 +1,189 @@
-/* SeatMap2 uses the same visual system as SeatMap.
-   Shared seat classes (.seat, .seat--available, etc.) are defined in SeatMap.css
-   and imported via the parent page. Any SeatMap2-specific overrides live here. */
-
-.seatmap2__wrapper {
+.seatmap {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 2rem;
+}
+
+.seatmap__svg-wrapper {
+  width: 100%;
+  max-width: 1120px;
+  overflow-x: auto;
+  /* Smooth momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.seatmap__svg {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Stage label */
+.seatmap__stage-rect {
+  fill: var(--color-navy);
+}
+
+.seatmap__stage-text {
+  fill: var(--color-offwhite);
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Section labels */
+.seatmap__section-label {
+  fill: var(--color-navy);
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.seatmap__row-label {
+  fill: #000000;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 14px;
+  opacity: 1.55;
+}
+
+/* Seat base styles */
+.seat {
+  transition: opacity 0.15s ease;
+  cursor: pointer;
+  stroke: none;
+}
+
+.seat:focus {
+  outline: 2px solid var(--color-blue-mid);
+  outline-offset: 1px;
+}
+
+/* Seat state classes — className swap, no inline styles */
+.seat--available {
+  fill: var(--color-blue-light);
+  opacity: 0.85;
+}
+
+.seat--available:hover {
+  opacity: 1;
+  stroke: var(--color-navy);
+  stroke-width: 1px;
+}
+
+.seat--selected {
+  fill: var(--color-navy);
+  opacity: 1;
+  stroke: var(--color-blue-light);
+  stroke-width: 1.5px;
+}
+
+.seat--reserved {
+  fill: #c8cdd4;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Legend */
+.seatmap__legend {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  list-style: none;
+}
+
+.seatmap__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 0.9rem;
+  color: var(--color-navy);
+}
+
+.seatmap__legend-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.seatmap__legend-swatch--available {
+  background-color: var(--color-blue-light);
+}
+
+.seatmap__legend-swatch--selected {
+  background-color: var(--color-navy);
+  border: 1.5px solid var(--color-blue-light);
+}
+
+.seatmap__legend-swatch--reserved {
+  background-color: #c8cdd4;
+}
+
+/* Selection info bar */
+.seatmap__selection-bar {
+  width: 100%;
+  max-width: 1120px;
+  padding: 0.875rem 1.25rem;
+  background-color: var(--color-navy);
+  color: var(--color-offwhite);
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.seatmap__selection-bar span {
+  color: var(--color-blue-light);
+  font-weight: 500;
+}
+
+.seatmap__max-notice {
+  font-size: 0.8rem;
+  font-family: var(--font-heading);
+  font-weight: 300;
+  color: var(--color-blue-mid);
+}
+
+/* Scroll hint — hidden on desktop, visible on mobile */
+.seatmap__scroll-hint {
+  display: none;
+  font-family: var(--font-heading);
+  font-weight: 300;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--color-blue-mid);
+  opacity: 0.6;
+}
+
+/* Selection bar stacks on very narrow screens */
+@media (max-width: 640px) {
+  .seatmap__legend {
+    gap: 1.25rem;
+  }
+
+  .seatmap__scroll-hint {
+    display: block;
+  }
+
+  .seatmap__selection-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    font-size: 0.85rem;
+  }
 }
