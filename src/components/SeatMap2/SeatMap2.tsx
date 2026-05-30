@@ -13,7 +13,7 @@ interface SeatMap2Props {
   onSeatClick: (id: string) => void;
   maxSelection?: number;
 }
-
+//bump
 export default function SeatMap2({
   reservedIds,
   selectedIds,
