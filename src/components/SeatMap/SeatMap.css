@@ -8,7 +8,7 @@
 
 .seatmap__svg-wrapper {
   width: 100%;
-  max-width: 860px;
+  max-width: 1120px;
   overflow-x: auto;
   /* Smooth momentum scrolling on iOS */
   -webkit-overflow-scrolling: touch;
@@ -57,8 +57,6 @@
 .seat {
   transition: opacity 0.15s ease;
   cursor: pointer;
-  rx: 2;
-  ry: 2;
   stroke: none;
 }
 
@@ -136,7 +134,7 @@
 /* Selection info bar */
 .seatmap__selection-bar {
   width: 100%;
-  max-width: 860px;
+  max-width: 1120px;
   padding: 0.875rem 1.25rem;
   background-color: var(--color-navy);
   color: var(--color-offwhite);
