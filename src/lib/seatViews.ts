@@ -1,22 +1,38 @@
-export const seatViews: Record<string, string> = {
-  'A1':  '/renders/placeholder.jpg',
-  'A5':  '/renders/placeholder.jpg',
-  'A10': '/renders/placeholder.jpg',
-  'B1':  '/renders/placeholder.jpg',
-  'B5':  '/renders/placeholder.jpg',
-  'B10': '/renders/placeholder.jpg',
-  'C1':  '/renders/placeholder.jpg',
-  'C5':  '/renders/placeholder.jpg',
-  'C10': '/renders/placeholder.jpg',
+export const seatViews: Record<string, Record<string, string>> = {
+  main: {
+    'A1':  '/renders/main/placeholder.jpg',
+    'A5':  '/renders/main/placeholder.jpg',
+    'A10': '/renders/main/placeholder.jpg',
+    'B1':  '/renders/main/placeholder.jpg',
+    'B5':  '/renders/main/placeholder.jpg',
+    'B10': '/renders/main/placeholder.jpg',
+    'C1':  '/renders/main/placeholder.jpg',
+    'C5':  '/renders/main/placeholder.jpg',
+    'C10': '/renders/main/placeholder.jpg',
+  },
+  chamber: {
+    'A1':  '/renders/chamber/placeholder.jpg',
+    'A5':  '/renders/chamber/placeholder.jpg',
+    'A10': '/renders/chamber/placeholder.jpg',
+    'B1':  '/renders/chamber/placeholder.jpg',
+    'B5':  '/renders/chamber/placeholder.jpg',
+    'B10': '/renders/chamber/placeholder.jpg',
+    'C1':  '/renders/chamber/placeholder.jpg',
+    'C5':  '/renders/chamber/placeholder.jpg',
+    'C10': '/renders/chamber/placeholder.jpg',
+  },
 };
 
 export function getClosestView(
+  auditorium: string,
   seatId: string,
-  allViews: Record<string, string>,
+  allViews: Record<string, Record<string, string>>,
 ): string | null {
-  if (allViews[seatId]) return allViews[seatId];
+  const views = allViews[auditorium] ?? {};
 
-  const keys = Object.keys(allViews);
+  if (views[seatId]) return views[seatId];
+
+  const keys = Object.keys(views);
   if (keys.length === 0) return null;
 
   const parse = (id: string) => ({
@@ -33,7 +49,7 @@ export function getClosestView(
     const dist = Math.hypot(row - k.row, num - k.num);
     if (dist < minDist) {
       minDist = dist;
-      best = allViews[key];
+      best = views[key];
     }
   }
 

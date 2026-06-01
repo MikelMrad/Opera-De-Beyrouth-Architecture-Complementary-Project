@@ -368,16 +368,16 @@ export default function SeatMap({
                 onClick={() => {
                   if (status === 'reserved') return;
                   onSeatClick(s.id);
-                  const imgSrc = getClosestView(s.id, seatViews);
-                  if (imgSrc) setBubble({ id: s.id, section: s.section, imgSrc, hasOwn: !!seatViews[s.id] });
+                  const imgSrc = getClosestView(auditorium, s.id, seatViews);
+                  if (imgSrc) setBubble({ id: s.id, section: s.section, imgSrc, hasOwn: !!seatViews[auditorium]?.[s.id] });
                 }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     if (status === 'reserved') return;
                     onSeatClick(s.id);
-                    const imgSrc = getClosestView(s.id, seatViews);
-                    if (imgSrc) setBubble({ id: s.id, section: s.section, imgSrc, hasOwn: !!seatViews[s.id] });
+                    const imgSrc = getClosestView(auditorium, s.id, seatViews);
+                    if (imgSrc) setBubble({ id: s.id, section: s.section, imgSrc, hasOwn: !!seatViews[auditorium]?.[s.id] });
                   }
                 }}
               />

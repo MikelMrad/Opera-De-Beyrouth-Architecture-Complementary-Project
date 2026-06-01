@@ -263,16 +263,16 @@ export default function SeatMap2({
                 onClick={() => {
                   if (status === 'reserved') return;
                   onSeatClick(s.id);
-                  const imgSrc = getClosestView(s.id, seatViews);
-                  if (imgSrc) setBubble({ id: s.id, section: s.section, imgSrc, hasOwn: !!seatViews[s.id] });
+                  const imgSrc = getClosestView('chamber', s.id, seatViews);
+                  if (imgSrc) setBubble({ id: s.id, section: s.section, imgSrc, hasOwn: !!seatViews['chamber']?.[s.id] });
                 }}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     if (status === 'reserved') return;
                     onSeatClick(s.id);
-                    const imgSrc = getClosestView(s.id, seatViews);
-                    if (imgSrc) setBubble({ id: s.id, section: s.section, imgSrc, hasOwn: !!seatViews[s.id] });
+                    const imgSrc = getClosestView('chamber', s.id, seatViews);
+                    if (imgSrc) setBubble({ id: s.id, section: s.section, imgSrc, hasOwn: !!seatViews['chamber']?.[s.id] });
                   }
                 }}
               />
