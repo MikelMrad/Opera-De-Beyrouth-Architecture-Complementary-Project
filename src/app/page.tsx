@@ -4,6 +4,7 @@ import AboutSection from '@/components/AboutSection/AboutSection';
 import AuditoriumCard from '@/components/AuditoriumCard/AuditoriumCard';
 import HorizontalQuotes from '@/components/HorizontalQuotes/HorizontalQuotes';
 import Footer from '@/components/Footer/Footer';
+import { SEAT_TOTALS_ROUNDED } from '@/lib/seatCounts';
 import './page.css';
 
 export default function HomePage() {
@@ -22,14 +23,14 @@ export default function HomePage() {
             <AuditoriumCard
               type="main"
               title="Le Phénix"
-              capacity={350}
-              description="Notre grande salle de 350 places offre une acoustique de classe mondiale, une fosse d'orchestre complète et une machinerie de scène de pointe — conçue pour accueillir l'opéra, la symphonie et le ballet au plus haut niveau international."
+              capacity={SEAT_TOTALS_ROUNDED.main}
+              description={`Notre grande salle de ${SEAT_TOTALS_ROUNDED.main} places offre une acoustique de classe mondiale, une fosse d'orchestre complète et une machinerie de scène de pointe — conçue pour accueillir l'opéra, la symphonie et le ballet au plus haut niveau international.`}
             />
             <AuditoriumCard
               type="chamber"
               title="Salle de l'Âme"
-              capacity={150}
-              description="Un espace intime de 150 places, idéal pour la musique de chambre, les récitals et les représentations expérimentales. Son acoustique chaleureuse et sa scénographie flexible créent un lien incomparable entre interprètes et public."
+              capacity={SEAT_TOTALS_ROUNDED.chamber}
+              description={`Une salle de ${SEAT_TOTALS_ROUNDED.chamber} places à l'atmosphère chaleureuse, idéale pour la musique de chambre, les récitals et les représentations expérimentales. Son acoustique enveloppante et sa scénographie flexible créent un lien incomparable entre interprètes et public.`}
             />
           </div>
         </div>

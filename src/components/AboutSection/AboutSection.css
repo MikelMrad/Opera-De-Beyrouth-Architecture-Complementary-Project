@@ -82,6 +82,10 @@
   min-height: 460px;
 }
 
+.about__image-slot--5 {
+  /* IMAGE_5: Salle de l'Âme interior render */
+}
+
 .about__image-caption {
   font-family: var(--font-heading);
   font-weight: 300;

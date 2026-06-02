@@ -1,3 +1,4 @@
+import { SEAT_TOTALS_ROUNDED } from '@/lib/seatCounts';
 import './AboutSection.css';
 
 export default function AboutSection() {
@@ -49,14 +50,38 @@ export default function AboutSection() {
           <div className="about__text">
             <h3>Excellence Acoustique</h3>
             <p className="anim-fade-up">
-              La salle Le Phénix, 350 places, a été conçue en collaboration avec les
-              plus grands acousticiens pour atteindre les temps de réverbération
-              exigés par le grand opéra, le concert symphonique et le ballet.
+              La salle Le Phénix, {SEAT_TOTALS_ROUNDED.main} places, a été conçue en
+              collaboration avec les plus grands acousticiens pour atteindre les temps de
+              réverbération exigés par le grand opéra, le concert symphonique et le ballet.
             </p>
             <p className="anim-fade-up">
               Panneaux de bois courbés, surfaces diffusantes précisément inclinées et
               sièges capitonnés sur mesure convergent dans un environnement où chaque
               murmure de l&apos;orchestre atteint chaque auditeur avec la même clarté et la même chaleur.
+            </p>
+          </div>
+        </div>
+
+        {/* Row 3: image left, text right — Salle de l'Âme */}
+        <div className="about__row">
+          {/* IMAGE_5: Salle de l'Âme interior render
+              Replace background-color with actual image in AboutSection.css */}
+          <div className="about__image-slot about__image-slot--5 anim-scale-in">
+            <span className="about__image-caption">Salle de l&apos;Âme — Rendu Intérieur</span>
+          </div>
+
+          <div className="about__text">
+            <h3>L&apos;Intimité de la Salle de l&apos;Âme</h3>
+            <p className="anim-fade-up">
+              Avec ses {SEAT_TOTALS_ROUNDED.chamber} places disposées au plus près de la
+              scène, la Salle de l&apos;Âme a été pensée pour la musique de chambre, les
+              récitals et la création contemporaine — un écrin où chaque souffle de
+              l&apos;interprète demeure perceptible.
+            </p>
+            <p className="anim-fade-up">
+              Sa scénographie modulable et son acoustique enveloppante abolissent la
+              distance entre la scène et le public, faisant de chaque représentation une
+              rencontre profondément intime.
             </p>
           </div>
         </div>
@@ -71,11 +96,11 @@ export default function AboutSection() {
         {/* Stats */}
         <div className="about__stats">
           <div className="about__stat anim-fade-up">
-            <p className="about__stat-number">350</p>
+            <p className="about__stat-number">{SEAT_TOTALS_ROUNDED.main}</p>
             <p className="about__stat-label">Places — Le Phénix</p>
           </div>
           <div className="about__stat anim-fade-up">
-            <p className="about__stat-number">150</p>
+            <p className="about__stat-number">{SEAT_TOTALS_ROUNDED.chamber}</p>
             <p className="about__stat-label">Places — Salle de l&apos;Âme</p>
           </div>
           <div className="about__stat anim-fade-up">
