@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import type { SeatStatus } from '@/types';
-import SeatViewModal from '@/components/SeatViewModal/SeatViewModal';
+import PanoramaModal from '@/components/PanoramaModal/PanoramaModal';
 import { seatViews, getClosestView } from '@/lib/seatViews';
 import './SeatMap2.css';
 
@@ -319,10 +319,10 @@ export default function SeatMap2({
       )}
 
       {modal && (
-        <SeatViewModal
+        <PanoramaModal
           seatId={modal.id}
-          section={modal.section}
-          imgSrc={modal.imgSrc}
+          sectionName={modal.section}
+          src={modal.imgSrc}
           onClose={() => setModal(null)}
         />
       )}

@@ -1,15 +1,17 @@
-export const seatViews: Record<string, Record<string, string>> = {
-  main: {
-    'A1':  '/renders/main/placeholder.jpg',
-    'A5':  '/renders/main/placeholder.jpg',
-    'A10': '/renders/main/placeholder.jpg',
-    'B1':  '/renders/main/placeholder.jpg',
-    'B5':  '/renders/main/placeholder.jpg',
-    'B10': '/renders/main/placeholder.jpg',
-    'C1':  '/renders/main/placeholder.jpg',
-    'C5':  '/renders/main/placeholder.jpg',
-    'C10': '/renders/main/placeholder.jpg',
-  },
+import { generatedSeatViews } from './seatViews.generated';
+
+/**
+ * Seat → 360° panorama lookup.
+ *
+ * Real renders are picked up automatically by filename: drop a JPG named after
+ * its seat into public/renders/<auditorium>/ (e.g. main/A22.jpg, chamber/G12.png)
+ * and it maps to that seat on the next dev/build — see scripts/generate-seat-views.mjs.
+ *
+ * The `manualSeatViews` below are hand-kept fallbacks (shared placeholders for
+ * auditoria that don't have real renders yet). Auto-generated entries win on
+ * any key conflict, so a real file always overrides a placeholder.
+ */
+const manualSeatViews: Record<string, Record<string, string>> = {
   chamber: {
     'A1':  '/renders/chamber/placeholder.jpg',
     'A5':  '/renders/chamber/placeholder.jpg',
@@ -22,6 +24,22 @@ export const seatViews: Record<string, Record<string, string>> = {
     'C10': '/renders/chamber/placeholder.jpg',
   },
 };
+
+function mergeViews(
+  base: Record<string, Record<string, string>>,
+  override: Record<string, Record<string, string>>,
+): Record<string, Record<string, string>> {
+  const out: Record<string, Record<string, string>> = {};
+  for (const key of new Set([...Object.keys(base), ...Object.keys(override)])) {
+    out[key] = { ...base[key], ...override[key] };
+  }
+  return out;
+}
+
+export const seatViews: Record<string, Record<string, string>> = mergeViews(
+  manualSeatViews,
+  generatedSeatViews,
+);
 
 export function getClosestView(
   auditorium: string,

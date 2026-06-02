@@ -1,0 +1,15 @@
+.panorama-viewer {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+  overflow: hidden;
+}
+
+.panorama-viewer:active {
+  cursor: grabbing;
+}
+
+.panorama-viewer canvas {
+  display: block;
+}

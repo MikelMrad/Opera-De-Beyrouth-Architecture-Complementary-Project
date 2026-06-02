@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "gen:seat-views": "node scripts/generate-seat-views.mjs",
+    "predev": "node scripts/generate-seat-views.mjs",
     "dev": "next dev",
+    "prebuild": "node scripts/generate-seat-views.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
