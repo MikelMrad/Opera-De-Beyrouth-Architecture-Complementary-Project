@@ -3,9 +3,9 @@ import Carousel from '@/components/Carousel/Carousel';
 import './AboutSection.css';
 
 const carouselSlides = [
-  { src: '/images/carousel/1.png', caption: 'Façade Latérale, Opéra de Beyrouth' },
-  { src: '/images/carousel/2.png', caption: 'Grand Foyer' },
-  { src: '/images/carousel/3.png', caption: 'Vue Extérieure' },
+  { src: '/images/carousel/1.webp', caption: 'Façade Latérale, Opéra de Beyrouth' },
+  { src: '/images/carousel/2.webp', caption: 'Grand Foyer' },
+  { src: '/images/carousel/3.webp', caption: 'Vue Extérieure' },
 ];
 
 export default function AboutSection() {
@@ -24,8 +24,8 @@ export default function AboutSection() {
 
         {/* Row 1: carousel left, text right */}
         <div className="about__row">
-          <div className="about__image-slot anim-scale-in" style={{ padding: 0 }}>
-            <Carousel slides={carouselSlides} interval={2000} />
+          <div className="about__image-slot anim-scale-in" style={{ padding: 0, minHeight: 'auto' }}>
+            <Carousel slides={carouselSlides} interval={2000} imgWidth={1672} imgHeight={941} />
           </div>
 
           <div className="about__text">

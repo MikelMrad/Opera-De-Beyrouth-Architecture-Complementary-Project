@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect, useRef, useCallback } from 'react';
+import Image from 'next/image';
 import './Carousel.css';
 
 interface CarouselSlide {
@@ -10,9 +11,11 @@ interface CarouselSlide {
 interface CarouselProps {
   slides: CarouselSlide[];
   interval?: number;
+  imgWidth?: number;
+  imgHeight?: number;
 }
 
-export default function Carousel({ slides, interval = 2000 }: CarouselProps) {
+export default function Carousel({ slides, interval = 2000, imgWidth, imgHeight }: CarouselProps) {
   const [active, setActive] = useState(0);
   const [prev, setPrev] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
@@ -38,18 +41,25 @@ export default function Carousel({ slides, interval = 2000 }: CarouselProps) {
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [active, advance, interval, paused, slides.length]);
 
+  const aspectRatio = imgWidth && imgHeight ? `${imgWidth} / ${imgHeight}` : undefined;
+
   return (
     <div
       className="carousel"
+      style={aspectRatio ? { aspectRatio } : undefined}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
       <div className="carousel__track">
         {slides.map((slide, i) => (
-          <div
+          <Image
             key={i}
+            src={slide.src}
+            alt={slide.caption ?? ''}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            style={{ objectFit: 'cover' }}
             className={`carousel__slide ${i === active ? 'carousel__slide--active' : ''} ${i === prev ? 'carousel__slide--prev' : ''}`}
-            style={{ backgroundImage: `url(${slide.src})` }}
           />
         ))}
       </div>
