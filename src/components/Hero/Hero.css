@@ -15,9 +15,9 @@
   position: absolute;
   inset: 0;
   background-color: var(--color-navy);
-  /* background-image: url('/images/facade.jpg');
-     background-size: cover;
-     background-position: center; */
+  background-image: url('/images/banner.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .hero__overlay {
@@ -44,9 +44,9 @@
   font-weight: 300;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--color-blue-light);
+  color: var(--color-offwhite);
   margin-bottom: 1.5rem;
-  opacity: 0.9;
+  opacity: 0.75;
 }
 
 .hero__title {
@@ -75,10 +75,11 @@
   font-family: var(--font-heading);
   font-size: clamp(0.95rem, 1.8vw, 1.15rem);
   font-weight: 300;
-  color: var(--color-blue-light);
+  color: var(--color-offwhite);
   letter-spacing: 0.06em;
   margin-bottom: 2.75rem;
   font-style: italic;
+  opacity: 0.8;
 }
 
 .hero__divider {
