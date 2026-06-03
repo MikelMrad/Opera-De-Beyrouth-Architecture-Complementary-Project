@@ -50,7 +50,7 @@ export default function AboutSection() {
           <div className="about__text">
             <h3>Excellence Acoustique</h3>
             <p className="anim-fade-up">
-              La salle Le Phénix, {SEAT_TOTALS_ROUNDED.main} places, a été conçue en
+              La salle Le Phénix, 1200 places, a été conçue en
               collaboration avec les plus grands acousticiens pour atteindre les temps de
               réverbération exigés par le grand opéra, le concert symphonique et le ballet.
             </p>
@@ -73,7 +73,7 @@ export default function AboutSection() {
           <div className="about__text">
             <h3>L&apos;Intimité de la Salle de l&apos;Âme</h3>
             <p className="anim-fade-up">
-              Avec ses {SEAT_TOTALS_ROUNDED.chamber} places disposées au plus près de la
+              Avec ses 600 places disposées au plus près de la
               scène, la Salle de l&apos;Âme a été pensée pour la musique de chambre, les
               récitals et la création contemporaine — un écrin où chaque souffle de
               l&apos;interprète demeure perceptible.
@@ -96,11 +96,11 @@ export default function AboutSection() {
         {/* Stats */}
         <div className="about__stats">
           <div className="about__stat anim-fade-up">
-            <p className="about__stat-number">{SEAT_TOTALS_ROUNDED.main}</p>
-            <p className="about__stat-label">Places — Le Phénix</p>
+            <p className="about__stat-number">1200</p>
+            <p className="about__stat-label"> — Le Phénix</p>
           </div>
           <div className="about__stat anim-fade-up">
-            <p className="about__stat-number">{SEAT_TOTALS_ROUNDED.chamber}</p>
+            <p className="about__stat-number">600</p>
             <p className="about__stat-label">Places — Salle de l&apos;Âme</p>
           </div>
           <div className="about__stat anim-fade-up">
