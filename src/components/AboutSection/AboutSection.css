@@ -44,8 +44,8 @@
 /* Image + text row */
 .about__row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  grid-template-columns: 3fr 1fr;
+  gap: 3rem;
   align-items: center;
   margin-bottom: 5rem;
 }
@@ -58,42 +58,13 @@
   direction: ltr;
 }
 
-/* IMAGE PLACEHOLDER BLOCKS
-   Replace background-color with background-image once assets are ready */
-.about__image-slot {
-  min-height: 380px;
-  background-color: var(--color-navy);
-  display: flex;
-  align-items: flex-end;
-  padding: 1rem 1.25rem;
+.about__carousel-slot {
+  overflow: hidden;
 }
 
-.about__image-slot--2 {
-  /* IMAGE_2: Side view of opera exterior */
-}
-
-.about__image-slot--3 {
-  /* IMAGE_3: Interior architectural render */
-}
-
-.about__image-slot--4 {
-  /* IMAGE_4: Stage close-up */
-  grid-column: 1 / -1;
-  min-height: 460px;
-}
-
-.about__image-slot--5 {
-  /* IMAGE_5: Salle de l'Âme interior render */
-}
-
-.about__image-caption {
-  font-family: var(--font-heading);
-  font-weight: 300;
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  color: var(--color-blue-light);
-  opacity: 0.65;
-  font-style: italic;
+.about__fullwidth {
+  margin-bottom: 5rem;
+  overflow: hidden;
 }
 
 .about__text {
@@ -163,14 +134,6 @@
 
   .about__row--reverse {
     direction: ltr;
-  }
-
-  .about__image-slot {
-    min-height: 260px;
-  }
-
-  .about__image-slot--4 {
-    min-height: 280px;
   }
 
   .about__stats {

@@ -2,10 +2,40 @@ import { SEAT_TOTALS_ROUNDED } from '@/lib/seatCounts';
 import Carousel from '@/components/Carousel/Carousel';
 import './AboutSection.css';
 
-const carouselSlides = [
-  { src: '/images/carousel/1.webp', caption: 'Façade Latérale, Opéra de Beyrouth' },
-  { src: '/images/carousel/2.webp', caption: 'Grand Foyer' },
-  { src: '/images/carousel/3.webp', caption: 'Vue Extérieure' },
+const carousel1Slides = [
+  { src: '/images/carousel1/1.webp', caption: 'Façade Latérale, Opéra de Beyrouth' },
+  { src: '/images/carousel1/2.webp', caption: 'Grand Foyer' },
+  { src: '/images/carousel1/3.webp', caption: 'Vue Extérieure' },
+];
+
+const carousel2Slides = [
+  { src: '/images/carousel2/1.webp', caption: 'Le Phénix — Rendu Intérieur' },
+  { src: '/images/carousel2/2.webp', caption: 'Le Phénix — Vue de Scène' },
+  { src: '/images/carousel2/3.webp', caption: 'Le Phénix — Balcon' },
+];
+
+const carousel3Slides = [
+  { src: '/images/carousel3/1.webp', caption: 'Salle de l\'Âme — Rendu Intérieur' },
+  { src: '/images/carousel3/2.webp', caption: 'Salle de l\'Âme — Scène' },
+  { src: '/images/carousel3/3.webp', caption: 'Salle de l\'Âme — Vue du Public' },
+];
+
+const carousel4Slides = [
+  { src: '/images/carousel4/1.webp', caption: 'La Scène — Le Phénix' },
+  { src: '/images/carousel4/2.webp', caption: 'Coulisses — Le Phénix' },
+  { src: '/images/carousel4/3.webp', caption: 'Plateau — Vue Panoramique' },
+];
+
+const carousel5Slides = [
+  { src: '/images/carousel5/1.webp', caption: 'Programmation Artistique' },
+  { src: '/images/carousel5/2.webp', caption: 'Saison Lyrique' },
+  { src: '/images/carousel5/3.webp', caption: 'Gala d\'Ouverture' },
+];
+
+const carousel6Slides = [
+  { src: '/images/carousel6/1.webp', caption: 'Ateliers Jeunesse' },
+  { src: '/images/carousel6/2.webp', caption: 'Résidences d\'Artistes' },
+  { src: '/images/carousel6/3.webp', caption: 'Rayonnement Culturel' },
 ];
 
 export default function AboutSection() {
@@ -24,10 +54,9 @@ export default function AboutSection() {
 
         {/* Row 1: carousel left, text right */}
         <div className="about__row">
-          <div className="about__image-slot anim-scale-in" style={{ padding: 0, minHeight: 'auto' }}>
-            <Carousel slides={carouselSlides} interval={2000} imgWidth={1672} imgHeight={941} />
+          <div className="about__carousel-slot anim-scale-in">
+            <Carousel slides={carousel1Slides} interval={2000} imgWidth={1672} imgHeight={941} />
           </div>
-
           <div className="about__text">
             <h3>Architecture &amp; Vision</h3>
             <p className="anim-fade-up">
@@ -44,14 +73,11 @@ export default function AboutSection() {
           </div>
         </div>
 
-        {/* Row 2: text left, image right */}
+        {/* Row 2: text left, carousel right */}
         <div className="about__row about__row--reverse">
-          {/* IMAGE_3: Interior architectural render
-              Replace background-color with actual image in AboutSection.css */}
-          <div className="about__image-slot about__image-slot--3 anim-scale-in">
-            <span className="about__image-caption">Le Phénix — Rendu Intérieur</span>
+          <div className="about__carousel-slot anim-scale-in">
+            <Carousel slides={carousel2Slides} interval={2000} imgWidth={1672} imgHeight={941} />
           </div>
-
           <div className="about__text">
             <h3>Excellence Acoustique</h3>
             <p className="anim-fade-up">
@@ -67,14 +93,11 @@ export default function AboutSection() {
           </div>
         </div>
 
-        {/* Row 3: image left, text right — Salle de l'Âme */}
+        {/* Row 3: carousel left, text right */}
         <div className="about__row">
-          {/* IMAGE_5: Salle de l'Âme interior render
-              Replace background-color with actual image in AboutSection.css */}
-          <div className="about__image-slot about__image-slot--5 anim-scale-in">
-            <span className="about__image-caption">Salle de l&apos;Âme — Rendu Intérieur</span>
+          <div className="about__carousel-slot anim-scale-in">
+            <Carousel slides={carousel3Slides} interval={2000} imgWidth={1672} imgHeight={941} />
           </div>
-
           <div className="about__text">
             <h3>L&apos;Intimité de la Salle de l&apos;Âme</h3>
             <p className="anim-fade-up">
@@ -91,11 +114,51 @@ export default function AboutSection() {
           </div>
         </div>
 
-        {/* Full-width image: Stage */}
-        {/* IMAGE_4: Stage close-up
-            Replace background-color with actual image in AboutSection.css */}
-        <div className="about__image-slot about__image-slot--4 anim-scale-in">
-          <span className="about__image-caption">La Scène — Le Phénix</span>
+        {/* Row 4: text left, carousel right */}
+        <div className="about__row about__row--reverse">
+          <div className="about__carousel-slot anim-scale-in">
+            <Carousel slides={carousel5Slides} interval={2000} imgWidth={1672} imgHeight={941} />
+          </div>
+          <div className="about__text">
+            <h3>Une Programmation d&apos;Exception</h3>
+            <p className="anim-fade-up">
+              De la grande tradition lyrique aux créations contemporaines,
+              chaque saison tisse un dialogue entre patrimoine et avant-garde.
+              Les plus grands noms de la scène internationale se produisent
+              aux côtés des talents émergents du monde arabe.
+            </p>
+            <p className="anim-fade-up">
+              Opéras, ballets, concerts symphoniques et récitals se succèdent
+              dans un calendrier conçu pour toucher tous les publics et
+              célébrer la diversité des expressions artistiques.
+            </p>
+          </div>
+        </div>
+
+        {/* Row 5: carousel left, text right */}
+        <div className="about__row">
+          <div className="about__carousel-slot anim-scale-in">
+            <Carousel slides={carousel6Slides} interval={2000} imgWidth={1672} imgHeight={941} />
+          </div>
+          <div className="about__text">
+            <h3>Rayonnement &amp; Transmission</h3>
+            <p className="anim-fade-up">
+              L&apos;Opéra de Beyrouth s&apos;engage au-delà de ses murs : ateliers
+              pédagogiques, résidences de création et partenariats avec les
+              écoles et universités du pays font de cet édifice un véritable
+              foyer de transmission artistique.
+            </p>
+            <p className="anim-fade-up">
+              En formant les artistes et les publics de demain, l&apos;institution
+              ancre son rôle dans la durée — gardienne vivante d&apos;une culture
+              qui se réinvente sans jamais s&apos;effacer.
+            </p>
+          </div>
+        </div>
+
+        {/* Full-width carousel: Stage */}
+        <div className="about__fullwidth anim-scale-in">
+          <Carousel slides={carousel4Slides} interval={2000} imgWidth={1672} imgHeight={941} />
         </div>
 
         {/* Stats */}

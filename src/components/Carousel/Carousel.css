@@ -2,14 +2,12 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  /* height is driven by aspect-ratio set via inline style from imgWidth/imgHeight props */
-  display: block;
 }
 
 .carousel__track {
   position: relative;
   width: 100%;
-  height: 100%;
+  /* aspect-ratio is set inline from imgWidth/imgHeight props — gives next/image fill a definite height */
 }
 
 /* next/image fill handles position/inset/size/object-fit inline; we own opacity + z-index */

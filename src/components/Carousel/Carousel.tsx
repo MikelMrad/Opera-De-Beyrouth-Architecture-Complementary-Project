@@ -46,11 +46,13 @@ export default function Carousel({ slides, interval = 2000, imgWidth, imgHeight 
   return (
     <div
       className="carousel"
-      style={aspectRatio ? { aspectRatio } : undefined}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="carousel__track">
+      <div
+        className="carousel__track"
+        style={aspectRatio ? { aspectRatio } : undefined}
+      >
         {slides.map((slide, i) => (
           <Image
             key={i}
