@@ -1,5 +1,12 @@
 import { SEAT_TOTALS_ROUNDED } from '@/lib/seatCounts';
+import Carousel from '@/components/Carousel/Carousel';
 import './AboutSection.css';
+
+const carouselSlides = [
+  { src: '/images/carousel/1.png', caption: 'Façade Latérale, Opéra de Beyrouth' },
+  { src: '/images/carousel/2.png', caption: 'Grand Foyer' },
+  { src: '/images/carousel/3.png', caption: 'Vue Extérieure' },
+];
 
 export default function AboutSection() {
   return (
@@ -15,12 +22,10 @@ export default function AboutSection() {
           </p>
         </div>
 
-        {/* Row 1: image left, text right */}
+        {/* Row 1: carousel left, text right */}
         <div className="about__row">
-          {/* IMAGE_2: Side view of opera exterior
-              Replace background-color with actual image in AboutSection.css */}
-          <div className="about__image-slot about__image-slot--2 anim-scale-in">
-            <span className="about__image-caption">Façade Latérale, Opéra de Beyrouth</span>
+          <div className="about__image-slot anim-scale-in" style={{ padding: 0 }}>
+            <Carousel slides={carouselSlides} interval={2000} />
           </div>
 
           <div className="about__text">
