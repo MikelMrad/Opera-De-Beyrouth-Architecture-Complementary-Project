@@ -56,7 +56,7 @@ export default function PanoramaViewer({ src }: PanoramaViewerProps) {
     scene.add(sphere);
 
     // ---- view state (degrees) ----
-    let lon = 0;
+    let lon = 180;
     let lat = 0;
     let lonV = 0; // angular velocity, drives the inertia on release
     let latV = 0;

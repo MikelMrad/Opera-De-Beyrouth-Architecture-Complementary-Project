@@ -3,6 +3,20 @@
 // and re-run `npm run gen:seat-views` (runs automatically on dev/build).
 
 export const generatedSeatViews: Record<string, Record<string, string>> = {
+  "chamber": {
+    "A12": "/renders/chamber/A12.jpg",
+    "A19": "/renders/chamber/A19.jpg",
+    "A4": "/renders/chamber/A4.jpg",
+    "K14": "/renders/chamber/K14.jpg",
+    "K23": "/renders/chamber/K23.jpg",
+    "K4": "/renders/chamber/K4.jpg",
+    "L14": "/renders/chamber/L14.jpg",
+    "L23": "/renders/chamber/L23.jpg",
+    "L4": "/renders/chamber/L4.jpg",
+    "T15": "/renders/chamber/T15.jpg",
+    "T25": "/renders/chamber/T25.jpg",
+    "T4": "/renders/chamber/T4.jpg"
+  },
   "main": {
     "A22": "/renders/main/A22.jpg",
     "A38": "/renders/main/A38.jpg",
