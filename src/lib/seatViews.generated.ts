@@ -4,6 +4,17 @@
 
 export const generatedSeatViews: Record<string, Record<string, string>> = {
   "main": {
-    "A22": "/renders/main/A22.jpg"
+    "A22": "/renders/main/A22.jpg",
+    "A38": "/renders/main/A38.jpg",
+    "A7": "/renders/main/A7.jpg",
+    "J25": "/renders/main/J25.jpg",
+    "J43": "/renders/main/J43.jpg",
+    "J7": "/renders/main/J7.jpg",
+    "K25": "/renders/main/K25.jpg",
+    "K43": "/renders/main/K43.jpg",
+    "K7": "/renders/main/K7.jpg",
+    "R21": "/renders/main/R21.jpg",
+    "R37": "/renders/main/R37.jpg",
+    "R6": "/renders/main/R6.jpg"
   }
 };
