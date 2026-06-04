@@ -12,6 +12,7 @@ export default function HomePage() {
     <>
       <Navbar />
       <Hero />
+      <AboutSection />
 
       <section className="home__auditoriums">
         <div className="home__auditoriums-inner">
@@ -36,7 +37,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <AboutSection />
 
       {/* Horizontal pinned quote strip — animated by useScrollAnimations */}
       <HorizontalQuotes />
