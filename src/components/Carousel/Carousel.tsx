@@ -13,9 +13,10 @@ interface CarouselProps {
   interval?: number;
   imgWidth?: number;
   imgHeight?: number;
+  sizes?: string;
 }
 
-export default function Carousel({ slides, interval = 2000, imgWidth, imgHeight }: CarouselProps) {
+export default function Carousel({ slides, interval = 2000, imgWidth, imgHeight, sizes = '(max-width: 768px) 100vw, 50vw' }: CarouselProps) {
   const [active, setActive] = useState(0);
   const [prev, setPrev] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
@@ -59,7 +60,7 @@ export default function Carousel({ slides, interval = 2000, imgWidth, imgHeight 
             src={slide.src}
             alt={slide.caption ?? ''}
             fill
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes={sizes}
             style={{ objectFit: 'cover' }}
             className={`carousel__slide ${i === active ? 'carousel__slide--active' : ''} ${i === prev ? 'carousel__slide--prev' : ''}`}
           />
