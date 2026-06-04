@@ -7,8 +7,8 @@ import Footer from '@/components/Footer/Footer';
 import ThreeDViewer from '@/components/ThreeDViewer/ThreeDViewer';
 
 const AUDITORIUM_LABELS: Record<string, string> = {
-  main: 'Le Phénix',
-  chamber: "Salle de l'Âme",
+  main: 'Grand Auditorium',
+  chamber: "Petit Auditorium",
 };
 
 export default function ConfirmationContent() {

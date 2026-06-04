@@ -35,12 +35,12 @@ export default function Navbar() {
           <li><Link href="/" className="navbar__link">Accueil</Link></li>
           <li>
             <Link href="/reserve?auditorium=main" className="navbar__link">
-              Le Phénix
+              Grand Auditorium
             </Link>
           </li>
           <li>
             <Link href="/reserve?auditorium=chamber" className="navbar__link">
-              Salle de l&apos;Âme
+              Petit Auditorium
             </Link>
           </li>
         </ul>
@@ -75,7 +75,7 @@ export default function Navbar() {
               className="navbar__mobile-link"
               onClick={closeMenu}
             >
-              Le Phénix
+              Grand Auditorium
             </Link>
           </li>
           <li>
@@ -84,7 +84,7 @@ export default function Navbar() {
               className="navbar__mobile-link"
               onClick={closeMenu}
             >
-              Salle de l&apos;Âme
+              Petit Auditorium
             </Link>
           </li>
         </ul>

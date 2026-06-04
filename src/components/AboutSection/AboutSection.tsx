@@ -58,7 +58,7 @@ export default function AboutSection() {
             <div className="about__text">
               <h3>Excellence Acoustique</h3>
               <p className="anim-fade-up">
-                La salle Le Phénix, 1200 places, a été conçue en
+                La salle Grand Auditorium, 1200 places, a été conçue en
                 collaboration avec les plus grands acousticiens pour atteindre les temps de
                 réverbération exigés par le grand opéra, le concert symphonique et le ballet.
               </p>
@@ -78,10 +78,10 @@ export default function AboutSection() {
               <Carousel slides={carousel3} interval={2000} imgWidth={1672} imgHeight={941} />
             </div>
             <div className="about__text">
-              <h3>L&apos;Intimité de la Salle de l&apos;Âme</h3>
+              <h3>L&apos;Intimité du Petit Auditorium</h3>
               <p className="anim-fade-up">
                 Avec ses 600 places disposées au plus près de la
-                scène, la Salle de l&apos;Âme a été pensée pour la musique de chambre, les
+                scène, la Petit Auditorium a été pensée pour la musique de chambre, les
                 récitals et la création contemporaine — un écrin où chaque souffle de
                 l&apos;interprète demeure perceptible.
               </p>
@@ -103,7 +103,7 @@ export default function AboutSection() {
             <div className="about__text">
               <h3>Une Programmation d&apos;Exception</h3>
               <p className="anim-fade-up">
-                De la grande tradition lyrique aux créations contemporaines,
+                Du grande tradition lyrique aux créations contemporaines,
                 chaque saison tisse un dialogue entre patrimoine et avant-garde.
                 Les plus grands noms de la scène internationale se produisent
                 aux côtés des talents émergents du monde arabe.
@@ -154,11 +154,11 @@ export default function AboutSection() {
         <div className="about__stats">
           <div className="about__stat anim-fade-up">
             <p className="about__stat-number">1200</p>
-            <p className="about__stat-label"> — Le Phénix</p>
+            <p className="about__stat-label"> — Grand Auditorium</p>
           </div>
           <div className="about__stat anim-fade-up">
             <p className="about__stat-number">600</p>
-            <p className="about__stat-label">Places — Salle de l&apos;Âme</p>
+            <p className="about__stat-label">Places — Petit Auditorium</p>
           </div>
           <div className="about__stat anim-fade-up">
             <p className="about__stat-number">2</p>

@@ -77,13 +77,13 @@ export default function Hero() {
             href="/reserve?auditorium=main"
             className="hero__cta-btn hero__cta-btn--primary"
           >
-            Le Phénix
+            Grand Auditorium
           </Link>
           <Link
             href="/reserve?auditorium=chamber"
             className="hero__cta-btn hero__cta-btn--secondary"
           >
-            Salle de l&apos;Âme
+            Petit Auditorium
           </Link>
         </div>
       </div>

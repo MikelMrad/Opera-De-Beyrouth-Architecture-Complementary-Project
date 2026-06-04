@@ -22,13 +22,13 @@ export default function HomePage() {
           <div className="home__auditoriums-grid">
             <AuditoriumCard
               type="main"
-              title="Le Phénix"
+              title="Grand Auditorium"
               capacity={1200}
               description={`Notre grande salle de 1200 places offre une acoustique de classe mondiale, une fosse d'orchestre complète et une machinerie de scène de pointe — conçue pour accueillir l'opéra, la symphonie et le ballet au plus haut niveau international.`}
             />
             <AuditoriumCard
               type="chamber"
-              title="Salle de l'Âme"
+              title="Petit Auditorium"
               capacity={600}
               description={`Une salle de 600 places à l'atmosphère chaleureuse, idéale pour la musique de chambre, les récitals et les représentations expérimentales. Son acoustique enveloppante et sa scénographie flexible créent un lien incomparable entre interprètes et public.`}
             />

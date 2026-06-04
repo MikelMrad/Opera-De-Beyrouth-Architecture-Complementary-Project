@@ -3,8 +3,8 @@ import type { Auditorium } from '@/types';
 /**
  * Real seat totals per hall, derived from the per-row seat counts the seat maps
  * actually render:
- *   - Le Phénix (main)        → components/SeatMap/SeatMap.tsx  (buildMain)
- *   - Salle de l'Âme (chamber) → components/SeatMap2/SeatMap2.tsx (buildLayout)
+ *   - Grand Auditorium (main)        → components/SeatMap/SeatMap.tsx  (buildMain)
+ *   - Petit Auditorium (chamber) → components/SeatMap2/SeatMap2.tsx (buildLayout)
  *
  * The landing page can't import those (they're client components), so the row
  * counts are mirrored here. If you change a row in either seat map, update the
@@ -13,7 +13,7 @@ import type { Auditorium } from '@/types';
 
 const sum = (arr: readonly number[]) => arr.reduce((a, b) => a + b, 0);
 
-/* ── Le Phénix (main) — fixed 18-seat centre block on every row + L/R sides ── */
+/* ── Grand Auditorium (main) — fixed 18-seat centre block on every row + L/R sides ── */
 const MAIN_CENTRE_BLOCK = 18;
 const MAIN_ROWS = 18; // 10 front + 8 back
 const MAIN_LEFT_FRONT = [13, 12, 13, 13, 13, 14, 14, 15, 15, 16];
@@ -21,7 +21,7 @@ const MAIN_RIGHT_FRONT = [12, 13, 13, 13, 14, 14, 15, 15, 16, 16];
 const MAIN_LEFT_BACK = [16, 16, 16, 15, 15, 14, 13, 12];
 const MAIN_RIGHT_BACK = [16, 16, 16, 15, 15, 14, 13, 12];
 
-/* ── Salle de l'Âme (chamber) — left + centre + right block per row ── */
+/* ── Petit Auditorium (chamber) — left + centre + right block per row ── */
 const CHAMBER_LEFT_FRONT = [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8];
 const CHAMBER_CENTRE_FRONT = [7, 8, 8, 8, 9, 9, 9, 9, 10, 10, 11];
 const CHAMBER_RIGHT_FRONT = [7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7];

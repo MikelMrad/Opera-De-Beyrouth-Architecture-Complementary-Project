@@ -13,8 +13,8 @@ import type { Auditorium } from '@/types';
 const MAX_SEATS = 4;
 
 const AUDITORIUM_LABELS: Record<Auditorium, string> = {
-  main: 'Le Phénix',
-  chamber: "Salle de l'Âme",
+  main: 'Grand Auditorium',
+  chamber: "Petit Auditorium",
 };
 
 export default function ReserveContent() {

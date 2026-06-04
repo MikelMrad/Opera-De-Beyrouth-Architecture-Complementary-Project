@@ -40,10 +40,10 @@ export default function Footer() {
             <div>
               <Link href="/" className="footer__link">Accueil</Link>
               <Link href="/reserve?auditorium=main" className="footer__link">
-                Le Phénix
+                Grand Auditorium
               </Link>
               <Link href="/reserve?auditorium=chamber" className="footer__link">
-                Salle de l&apos;Âme
+                Petit Auditorium
               </Link>
             </div>
           </div>
