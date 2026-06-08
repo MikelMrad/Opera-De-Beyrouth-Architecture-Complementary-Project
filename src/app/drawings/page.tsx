@@ -41,8 +41,6 @@ export default function DrawingsPage() {
       while (true) {
         const url = `/architectural-drawings/${i}.pdf`;
         try {
-          const resp = await fetch(url, { method: 'HEAD' });
-          if (!resp.ok) break;
           const pdf = await getDocument({ url }).promise;
           if (cancelled) return;
           for (let p = 1; p <= pdf.numPages; p++) {
@@ -50,6 +48,7 @@ export default function DrawingsPage() {
           }
           i++;
         } catch {
+          // PDF doesn't exist or failed to load — stop here
           break;
         }
       }
@@ -68,7 +67,23 @@ export default function DrawingsPage() {
     <>
       <Navbar />
       <div style={{ background: 'var(--color-offwhite)', minHeight: '100vh', paddingTop: 80 }}>
-        {!loaded && <div style={{ height: '100vh', background: 'var(--color-offwhite)' }} />}
+        {!loaded && (
+          <div style={{
+            height: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <div style={{
+              width: 36,
+              height: 36,
+              borderRadius: '50%',
+              border: '1.5px solid var(--color-navy)',
+              borderTopColor: 'transparent',
+              animation: 'spin 0.8s linear infinite',
+            }} />
+          </div>
+        )}
         {pages.map((entry, idx) => (
           <PdfPageCanvas
             key={`${entry.pdfIndex}-${entry.pageIndex}`}
