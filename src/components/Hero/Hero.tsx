@@ -72,20 +72,6 @@ export default function Hero() {
           La Première Maison d&apos;Opéra de Renommée Mondiale à Beyrouth
         </p>
 
-        <div className="hero__cta-group">
-          <Link
-            href="/reserve?auditorium=main"
-            className="hero__cta-btn hero__cta-btn--primary"
-          >
-            Grand Auditorium
-          </Link>
-          <Link
-            href="/reserve?auditorium=chamber"
-            className="hero__cta-btn hero__cta-btn--secondary"
-          >
-            Petit Auditorium
-          </Link>
-        </div>
       </div>
 
       <div className="hero__scroll-hint">
