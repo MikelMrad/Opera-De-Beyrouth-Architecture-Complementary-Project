@@ -20,7 +20,7 @@ const PLANS: Array<{ number: string; label: string }> = [
   { number: '-5.00', label: 'Parking' },
   { number: 'Façade Sud', label: 'Façade Ouest' },
   { number: 'Façade Est', label: 'Façade Nord' },
-  { number: "AA'", label: "BB'" },
+  { number: "Coupe AA'", label: "Coupe BB'" },
 ];
 
 export default function DrawingsPage() {

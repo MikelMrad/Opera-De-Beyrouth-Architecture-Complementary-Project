@@ -14,8 +14,8 @@ interface PageEntry {
 // Edit this array to change the number and name shown next to each PDF.
 // Index 0 = 1.pdf, index 1 = 2.pdf, etc.
 const ITEMS: Array<{ number: string; label: string }> = [
+  { number: 'Axonometrie Des Gaines', label: 'Axonometrie De La Structure' },
   { number: 'Axonometrie Mecanique', label: 'Axonometrie Electrique' },
-  { number: '02', label: 'Coupe Technique' },
   { number: '03', label: 'Détail Structurel' },
   { number: '04', label: 'Façade Technique' },
   { number: '05', label: 'Plan Électrique' },
