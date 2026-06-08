@@ -13,17 +13,18 @@ interface PageEntry {
 
 // Edit this array to change the number and name shown next to each PDF.
 // Index 0 = 1.pdf, index 1 = 2.pdf, etc.
-const PLANS: Array<{ number: string; label: string }> = [
-  { number: '+3.5O', label: 'RDC' },
-  { number: '+8.00 ; +13.00', label: 'Auditoriums' },
-  { number: '-1.50', label: 'Parking' },
-  { number: '-5.00', label: 'Parking' },
-  { number: 'Façade Sud', label: 'Façade Ouest' },
-  { number: 'Façade Est', label: 'Façade Nord' },
-  { number: "AA'", label: "BB'" },
+const ITEMS: Array<{ number: string; label: string }> = [
+  { number: 'Axonometrie Mecanique', label: 'Axonometrie Electrique' },
+  { number: '02', label: 'Coupe Technique' },
+  { number: '03', label: 'Détail Structurel' },
+  { number: '04', label: 'Façade Technique' },
+  { number: '05', label: 'Plan Électrique' },
+  { number: '06', label: 'Plan Mécanique' },
+  { number: '07', label: 'Détail Fondations' },
+  { number: '08', label: 'Détail Toiture' },
 ];
 
-export default function DrawingsPage() {
+export default function DessinsTechniquePage() {
   const [pages, setPages] = useState<PageEntry[]>([]);
   const [loaded, setLoaded] = useState(false);
 
@@ -38,7 +39,7 @@ export default function DrawingsPage() {
       let i = 1;
 
       while (true) {
-        const url = `/architectural-drawings/${i}.pdf`;
+        const url = `/dessins-technique/${i}.pdf`;
         try {
           const pdf = await getDocument({ url }).promise;
           if (cancelled) return;
@@ -47,7 +48,6 @@ export default function DrawingsPage() {
           }
           i++;
         } catch {
-          // PDF doesn't exist or failed to load — stop here
           break;
         }
       }
@@ -67,12 +67,7 @@ export default function DrawingsPage() {
       <Navbar />
       <div style={{ background: 'var(--color-offwhite)', minHeight: '100vh', paddingTop: 80 }}>
         {!loaded && (
-          <div style={{
-            height: '100vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+          <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{
               width: 36,
               height: 36,
@@ -83,12 +78,12 @@ export default function DrawingsPage() {
             }} />
           </div>
         )}
-        {pages.map((entry, idx) => (
+        {pages.map((entry) => (
           <PdfPageCanvas
             key={`${entry.pdfIndex}-${entry.pageIndex}`}
             entry={entry}
-            number={PLANS[entry.pdfIndex - 1]?.number ?? String(entry.pdfIndex).padStart(2, '0')}
-            label={PLANS[entry.pdfIndex - 1]?.label ?? `Plan ${entry.pdfIndex}`}
+            number={ITEMS[entry.pdfIndex - 1]?.number ?? String(entry.pdfIndex).padStart(2, '0')}
+            label={ITEMS[entry.pdfIndex - 1]?.label ?? `Dessin ${entry.pdfIndex}`}
           />
         ))}
       </div>
@@ -172,9 +167,9 @@ function PdfPageCanvas({
       ref={containerRef}
       style={{
         width: '100%',
-        height: '100vh',
         position: 'relative',
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20,
@@ -183,83 +178,13 @@ function PdfPageCanvas({
     >
       {/* Pulse placeholder */}
       {!isRendered && (
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: '#e8e8e0',
-            animation: 'pulse 1.8s ease-in-out infinite',
-          }}
-        />
-      )}
-
-      {/* Left label */}
-      <div
-        style={{
+        <div style={{
           position: 'absolute',
-          left: '2.5rem',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '1.25rem',
-          zIndex: 2,
-          userSelect: 'none',
-          pointerEvents: 'none',
-        }}
-      >
-        {/* top line */}
-        <div style={{ height: 56, width: 1, background: 'var(--color-navy)', opacity: 0.2 }} />
-
-        {/* plan number */}
-        <span
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: '1rem',
-            fontWeight: 700,
-            letterSpacing: '0.22em',
-            color: 'var(--color-navy)',
-            writingMode: 'vertical-rl',
-            transform: 'rotate(180deg)',
-            lineHeight: 1,
-          }}
-        >
-          {number}
-        </span>
-
-        {/* dot divider */}
-        <div
-          style={{
-            width: 3,
-            height: 3,
-            borderRadius: '50%',
-            background: 'var(--color-navy)',
-            opacity: 0.35,
-            flexShrink: 0,
-          }}
-        />
-
-        {/* plan name */}
-        <span
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: '1rem',
-            fontWeight: 700,
-            letterSpacing: '0.22em',
-            color: 'var(--color-navy)',
-            opacity: 0.6,
-            writingMode: 'vertical-rl',
-            transform: 'rotate(180deg)',
-            lineHeight: 1,
-          }}
-        >
-          {label}
-        </span>
-
-        {/* bottom line */}
-        <div style={{ height: 56, width: 1, background: 'var(--color-navy)', opacity: 0.2 }} />
-      </div>
+          inset: 0,
+          background: '#e8e8e0',
+          animation: 'pulse 1.8s ease-in-out infinite',
+        }} />
+      )}
 
       {/* PDF canvas */}
       <canvas
@@ -272,6 +197,37 @@ function PdfPageCanvas({
           zIndex: 1,
         }}
       />
+
+      {/* Bottom label */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-evenly',
+        width: '100%',
+        padding: '1.25rem 2.5rem',
+        zIndex: 2,
+        userSelect: 'none',
+      }}>
+        <span style={{
+          fontFamily: 'var(--font-heading)',
+          fontSize: '1rem',
+          fontWeight: 700,
+          letterSpacing: '0.22em',
+          color: 'var(--color-navy)',
+        }}>
+          {number}
+        </span>
+
+        <span style={{
+          fontFamily: 'var(--font-heading)',
+          fontSize: '1rem',
+          fontWeight: 700,
+          letterSpacing: '0.22em',
+          color: 'var(--color-navy)',
+          opacity: 0.6,
+        }}>
+          {label}
+        </span>
+      </div>
     </div>
   );
 }

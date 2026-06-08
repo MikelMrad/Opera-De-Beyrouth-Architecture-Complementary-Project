@@ -4,7 +4,6 @@ import AboutSection from '@/components/AboutSection/AboutSection';
 import AuditoriumCard from '@/components/AuditoriumCard/AuditoriumCard';
 import HorizontalQuotes from '@/components/HorizontalQuotes/HorizontalQuotes';
 import Footer from '@/components/Footer/Footer';
-import { SEAT_TOTALS_ROUNDED } from '@/lib/seatCounts';
 import './page.css';
 
 export default function HomePage() {
@@ -36,7 +35,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
 
       {/* Horizontal pinned quote strip — animated by useScrollAnimations */}
       <HorizontalQuotes />

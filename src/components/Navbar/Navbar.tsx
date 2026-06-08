@@ -34,18 +34,18 @@ export default function Navbar() {
         <ul className="navbar__links">
           <li><Link href="/" className="navbar__link">Accueil</Link></li>
           <li>
-            <Link href="/reserve?auditorium=main" className="navbar__link">
-              Grand Auditorium
-            </Link>
-          </li>
-          <li>
-            <Link href="/reserve?auditorium=chamber" className="navbar__link">
-              Petit Auditorium
+            <Link href="/context" className="navbar__link">
+              Contexte
             </Link>
           </li>
           <li>
             <Link href="/drawings" className="navbar__link">
               Dessins Architecturaux
+            </Link>
+          </li>
+          <li>
+            <Link href="/dessins-technique" className="navbar__link">
+              Dessins Techniques
             </Link>
           </li>
         </ul>
@@ -75,26 +75,18 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link
-              href="/reserve?auditorium=main"
-              className="navbar__mobile-link"
-              onClick={closeMenu}
-            >
-              Grand Auditorium
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/reserve?auditorium=chamber"
-              className="navbar__mobile-link"
-              onClick={closeMenu}
-            >
-              Petit Auditorium
-            </Link>
-          </li>
-          <li>
             <Link href="/drawings" className="navbar__mobile-link" onClick={closeMenu}>
               Dessins Architecturaux
+            </Link>
+          </li>
+          <li>
+            <Link href="/context" className="navbar__mobile-link" onClick={closeMenu}>
+              Contexte
+            </Link>
+          </li>
+          <li>
+            <Link href="/dessins-technique" className="navbar__mobile-link" onClick={closeMenu}>
+              Dessins Techniques
             </Link>
           </li>
         </ul>

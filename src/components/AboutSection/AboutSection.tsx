@@ -1,4 +1,3 @@
-import { SEAT_TOTALS_ROUNDED } from '@/lib/seatCounts';
 import { getCarouselSlides } from '@/lib/getCarouselSlides';
 import Carousel from '@/components/Carousel/Carousel';
 import GalleryGrid from '@/components/GalleryGrid/GalleryGrid';
@@ -150,21 +149,6 @@ export default function AboutSection() {
         {/* Bento image gallery */}
         <GalleryGrid images={galleryImages} />
 
-        {/* Stats */}
-        <div className="about__stats">
-          <div className="about__stat anim-fade-up">
-            <p className="about__stat-number">1200</p>
-            <p className="about__stat-label"> — Grand Auditorium</p>
-          </div>
-          <div className="about__stat anim-fade-up">
-            <p className="about__stat-number">600</p>
-            <p className="about__stat-label">Places — Petit Auditorium</p>
-          </div>
-          <div className="about__stat anim-fade-up">
-            <p className="about__stat-number">2</p>
-            <p className="about__stat-label">Espaces de Représentation</p>
-          </div>
-        </div>
       </div>
     </section>
   );
