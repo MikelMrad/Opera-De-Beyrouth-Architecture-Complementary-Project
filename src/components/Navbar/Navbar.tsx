@@ -43,6 +43,11 @@ export default function Navbar() {
               Petit Auditorium
             </Link>
           </li>
+          <li>
+            <Link href="/drawings" className="navbar__link">
+              Dessins Architecturaux
+            </Link>
+          </li>
         </ul>
 
         {/* Hamburger — mobile only */}
@@ -85,6 +90,11 @@ export default function Navbar() {
               onClick={closeMenu}
             >
               Petit Auditorium
+            </Link>
+          </li>
+          <li>
+            <Link href="/drawings" className="navbar__mobile-link" onClick={closeMenu}>
+              Dessins Architecturaux
             </Link>
           </li>
         </ul>
