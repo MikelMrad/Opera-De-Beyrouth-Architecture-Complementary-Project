@@ -1,33 +1,33 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import type { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
 
-interface ImageEntry {
-  index: number;
-  src: string;
-}
+type Entry =
+  | { type: 'image'; index: number; src: string }
+  | { type: 'pdf'; pdfIndex: number; pageIndex: number; pdf: PDFDocumentProxy };
 
-// Edit this array to change the number and name shown next to each image.
-// Index 0 = 1.jpg/png/webp, index 1 = 2.jpg/png/webp, etc.
 const CONTEXT_ITEMS: Array<{ number: string; label: string }> = [
+  { number: '', label: 'Analyse De Site' },
+  { number: '', label: 'Programme' },
   { number: '', label: 'Plan Masse' },
   { number: '', label: 'Plan Maase' },
 ];
 
-const EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp'];
+const IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'webp'];
 
 function findImageUrl(index: number): Promise<string | null> {
   return new Promise((resolve) => {
     let tried = 0;
-    for (const ext of EXTENSIONS) {
+    for (const ext of IMAGE_EXTENSIONS) {
       const url = `/context/${index}.${ext}`;
       const img = new window.Image();
       img.onload = () => resolve(url);
       img.onerror = () => {
         tried++;
-        if (tried === EXTENSIONS.length) resolve(null);
+        if (tried === IMAGE_EXTENSIONS.length) resolve(null);
       };
       img.src = url;
     }
@@ -35,32 +35,56 @@ function findImageUrl(index: number): Promise<string | null> {
 }
 
 export default function ContextPage() {
-  const [images, setImages] = useState<ImageEntry[]>([]);
+  const [entries, setEntries] = useState<Entry[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
 
-    async function loadAllImages() {
-      const all: ImageEntry[] = [];
+    async function loadAll() {
+      const { GlobalWorkerOptions, getDocument } = await import('pdfjs-dist');
+      GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+
+      const all: Entry[] = [];
       let i = 1;
 
       while (true) {
+        // Try PDF first
+        try {
+          const pdf = await getDocument({ url: `/context/${i}.pdf` }).promise;
+          if (cancelled) return;
+          for (let p = 1; p <= pdf.numPages; p++) {
+            all.push({ type: 'pdf', pdfIndex: i, pageIndex: p, pdf });
+          }
+          i++;
+          continue;
+        } catch {
+          // not a PDF, try image
+        }
+
         const src = await findImageUrl(i);
         if (!src || cancelled) break;
-        all.push({ index: i, src });
+        all.push({ type: 'image', index: i, src });
         i++;
       }
 
       if (!cancelled) {
-        setImages(all);
+        setEntries(all);
         setLoaded(true);
       }
     }
 
-    loadAllImages();
+    loadAll();
     return () => { cancelled = true; };
   }, []);
+
+  function getItemMeta(index: number) {
+    const item = CONTEXT_ITEMS[index - 1];
+    return {
+      number: item?.number ?? String(index).padStart(2, '0'),
+      label: item?.label ?? `Item ${index}`,
+    };
+  }
 
   return (
     <>
@@ -78,26 +102,73 @@ export default function ContextPage() {
             }} />
           </div>
         )}
-        {images.map((entry, idx) => (
-          <ContextImageSlot
-            key={entry.index}
-            entry={entry}
-            number={CONTEXT_ITEMS[entry.index - 1]?.number ?? String(entry.index).padStart(2, '0')}
-            label={CONTEXT_ITEMS[entry.index - 1]?.label ?? `Image ${entry.index}`}
-          />
-        ))}
+        {entries.map((entry, idx) => {
+          const sourceIndex = entry.type === 'pdf' ? entry.pdfIndex : entry.index;
+          const { number, label } = getItemMeta(sourceIndex);
+          if (entry.type === 'pdf') {
+            return (
+              <PdfSlot
+                key={`pdf-${entry.pdfIndex}-${entry.pageIndex}`}
+                entry={entry}
+                number={number}
+                label={label}
+              />
+            );
+          }
+          return (
+            <ImageSlot
+              key={`img-${entry.index}`}
+              entry={entry}
+              number={number}
+              label={label}
+            />
+          );
+        })}
       </div>
       <Footer />
     </>
   );
 }
 
-function ContextImageSlot({
+function LabelRow({ number, label }: { number: string; label: string }) {
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'space-around',
+      width: '100%',
+      padding: '1.25rem 2.5rem',
+      zIndex: 2,
+      userSelect: 'none',
+    }}>
+      <span style={{
+        fontFamily: 'var(--font-heading)',
+        fontSize: '1rem',
+        fontWeight: 700,
+        letterSpacing: '0.22em',
+        color: 'var(--color-navy)',
+      }}>
+        {number}
+      </span>
+      <span style={{
+        fontFamily: 'var(--font-heading)',
+        fontSize: '1rem',
+        fontWeight: 700,
+        letterSpacing: '0.22em',
+        color: 'var(--color-navy)',
+        opacity: 0.6,
+      }}>
+        {label}
+      </span>
+    </div>
+  );
+}
+
+function ImageSlot({
   entry,
   number,
   label,
 }: {
-  entry: ImageEntry;
+  entry: Extract<Entry, { type: 'image' }>;
   number: string;
   label: string;
 }) {
@@ -108,7 +179,6 @@ function ContextImageSlot({
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
-
     const observer = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
@@ -120,7 +190,6 @@ function ContextImageSlot({
       },
       { rootMargin: '300px' }
     );
-
     observer.observe(container);
     return () => observer.disconnect();
   }, []);
@@ -130,16 +199,15 @@ function ContextImageSlot({
       ref={containerRef}
       style={{
         width: '100%',
-        height: '100vh',
         position: 'relative',
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 20,
         background: 'var(--color-offwhite)',
       }}
     >
-      {/* Pulse placeholder */}
       {!isLoaded && (
         <div style={{
           position: 'absolute',
@@ -148,64 +216,8 @@ function ContextImageSlot({
           animation: 'pulse 1.8s ease-in-out infinite',
         }} />
       )}
-
-      {/* Left label */}
-      <div style={{
-        position: 'absolute',
-        left: '2.5rem',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '1.25rem',
-        zIndex: 2,
-        userSelect: 'none',
-        pointerEvents: 'none',
-      }}>
-        <div style={{ height: 56, width: 1, background: 'var(--color-navy)', opacity: 0.2 }} />
-
-        <span style={{
-          fontFamily: 'var(--font-heading)',
-          fontSize: '1rem',
-          fontWeight: 700,
-          letterSpacing: '0.22em',
-          color: 'var(--color-navy)',
-          writingMode: 'vertical-rl',
-          transform: 'rotate(180deg)',
-          lineHeight: 1,
-        }}>
-          {number}
-        </span>
-
-        <div style={{
-          width: 3,
-          height: 3,
-          borderRadius: '50%',
-          background: 'var(--color-navy)',
-          opacity: 0.35,
-          flexShrink: 0,
-        }} />
-
-        <span style={{
-          fontFamily: 'var(--font-heading)',
-          fontSize: '1rem',
-          fontWeight: 700,
-          letterSpacing: '0.22em',
-          color: 'var(--color-navy)',
-          opacity: 0.6,
-          writingMode: 'vertical-rl',
-          transform: 'rotate(180deg)',
-          lineHeight: 1,
-        }}>
-          {label}
-        </span>
-
-        <div style={{ height: 56, width: 1, background: 'var(--color-navy)', opacity: 0.2 }} />
-      </div>
-
-      {/* Image */}
       {shouldRender && (
+        // eslint-disable-next-line @next/next/no-img-element
         <img
           src={entry.src}
           alt={label}
@@ -219,6 +231,108 @@ function ContextImageSlot({
           }}
         />
       )}
+      <LabelRow number={number} label={label} />
+    </div>
+  );
+}
+
+function PdfSlot({
+  entry,
+  number,
+  label,
+}: {
+  entry: Extract<Entry, { type: 'pdf' }>;
+  number: string;
+  label: string;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const renderingRef = useRef(false);
+  const renderedRef = useRef(false);
+  const [isRendered, setIsRendered] = useState(false);
+
+  async function renderPage() {
+    const canvas = canvasRef.current;
+    if (!canvas || renderingRef.current) return;
+    renderingRef.current = true;
+    try {
+      const page: PDFPageProxy = await entry.pdf.getPage(entry.pageIndex);
+      const dpr = window.devicePixelRatio || 1;
+      const baseVp = page.getViewport({ scale: 1 });
+      const scale = dpr * (window.innerHeight / baseVp.height);
+      const viewport = page.getViewport({ scale });
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      await page.render({ canvas, canvasContext: ctx, viewport }).promise;
+      renderedRef.current = true;
+      setIsRendered(true);
+    } finally {
+      renderingRef.current = false;
+    }
+  }
+
+  function clearCanvas() {
+    const canvas = canvasRef.current;
+    if (!canvas || !renderedRef.current) return;
+    const ctx = canvas.getContext('2d');
+    ctx?.clearRect(0, 0, canvas.width, canvas.height);
+    renderedRef.current = false;
+    setIsRendered(false);
+  }
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const observer = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          if (!renderedRef.current && !renderingRef.current) renderPage();
+        } else {
+          clearCanvas();
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    observer.observe(container);
+    return () => observer.disconnect();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div
+      ref={containerRef}
+      style={{
+        width: '100%',
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 20,
+        background: 'var(--color-offwhite)',
+      }}
+    >
+      {!isRendered && (
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: '#e8e8e0',
+          animation: 'pulse 1.8s ease-in-out infinite',
+        }} />
+      )}
+      <canvas
+        ref={canvasRef}
+        style={{
+          display: 'block',
+          height: '100vh',
+          width: 'auto',
+          position: 'relative',
+          zIndex: 1,
+        }}
+      />
+      <LabelRow number={number} label={label} />
     </div>
   );
 }

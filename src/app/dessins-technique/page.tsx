@@ -16,12 +16,8 @@ interface PageEntry {
 const ITEMS: Array<{ number: string; label: string }> = [
   { number: 'Axonometrie Des Gaines', label: 'Axonometrie De La Structure' },
   { number: 'Axonometrie Mecanique', label: 'Axonometrie Electrique' },
-  { number: '03', label: 'Détail Structurel' },
-  { number: '04', label: 'Façade Technique' },
-  { number: '05', label: 'Plan Électrique' },
-  { number: '06', label: 'Plan Mécanique' },
-  { number: '07', label: 'Détail Fondations' },
-  { number: '08', label: 'Détail Toiture' },
+  { number: 'Wall Sections', label: '' },
+  { number: 'Façades', label: '' },
 ];
 
 export default function DessinsTechniquePage() {
