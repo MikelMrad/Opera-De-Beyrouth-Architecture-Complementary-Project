@@ -17,11 +17,9 @@ export default function AboutSection() {
       <div className="about__inner">
         <div className="about__header">
           <p className="about__label">Notre Histoire</p>
-          <h2 className="about__title">Une Renaissance Culturelle pour Beyrouth</h2>
+          <h2 className="about__title">L’Opéra des Confluences Beyrouthine</h2>
           <p className="about__intro anim-fade-up">
-            Surgissant du cœur de la ville, l&apos;Opéra de Beyrouth témoigne de l&apos;esprit
-            indéfectible du Liban — un foyer d&apos;excellence artistique qui honore le passé
-            et embrasse l&apos;avenir.
+            Diapason unificateur de la mosaïque sociale libanaise
           </p>
         </div>
 
