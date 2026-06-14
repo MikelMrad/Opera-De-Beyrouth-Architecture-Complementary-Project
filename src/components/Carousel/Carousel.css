@@ -54,6 +54,63 @@
   font-style: italic;
 }
 
+/* Prev / next arrows */
+.carousel__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  color: #ffffff;
+  background: rgba(8, 20, 45, 0.3);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease, background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.carousel:hover .carousel__arrow {
+  opacity: 1;
+}
+
+.carousel__arrow:hover {
+  background: rgba(8, 20, 45, 0.55);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.carousel__arrow:active {
+  transform: translateY(-50%) scale(0.92);
+}
+
+.carousel__arrow svg {
+  width: 22px;
+  height: 22px;
+}
+
+.carousel__arrow--prev {
+  left: 1rem;
+}
+
+.carousel__arrow--next {
+  right: 1rem;
+}
+
+/* Touch devices have no hover — keep the arrows visible */
+@media (hover: none) {
+  .carousel__arrow {
+    opacity: 1;
+    background: rgba(8, 20, 45, 0.45);
+  }
+}
+
 /* Dots */
 .carousel__dots {
   position: absolute;
