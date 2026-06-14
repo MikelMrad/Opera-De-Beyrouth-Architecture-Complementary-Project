@@ -1,0 +1,296 @@
+.dwg-page {
+  background: var(--color-offwhite);
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+/* ---- Centered stack of gallery blocks ---- */
+.dwg-blocks {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 4.5rem 2rem 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+}
+
+.dwg-block__head {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.dwg-block__meta {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-blue-mid);
+  margin-bottom: 0.7rem;
+}
+
+.dwg-block__title {
+  /* h2 → --font-display via globals.css */
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  color: var(--color-navy);
+  line-height: 1.1;
+}
+
+/* Big plan on the left, column of three on the right */
+.dwg-block__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 16px;
+  height: min(72vh, 640px);
+}
+
+.dwg-block__main {
+  min-width: 0;
+  height: 100%;
+}
+
+.dwg-block__col {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dwg-block__col > * {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Accordion (landscape blocks 1 & 2). Two axes, so all four images take part:
+   - horizontal: hovering the big image grows it and shrinks the column, and
+     hovering the column grows it and shrinks the big image;
+   - vertical: inside the column, the hovered detail tile grows and the others
+     shrink. Same expand-on-hover idea as GalleryGrid. No overlap — the fixed
+     block size is just redistributed. */
+.dwg-block__grid--accordion {
+  display: flex; /* was grid; flex lets the two cells resize on hover */
+}
+
+.dwg-block__grid--accordion > .dwg-block__main,
+.dwg-block__grid--accordion > .dwg-block__col {
+  min-width: 0;
+  transition: flex-grow 0.55s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s ease;
+}
+
+.dwg-block__grid--accordion > .dwg-block__main {
+  flex: 2 1 0; /* big image ~2/3 width at rest */
+}
+
+.dwg-block__grid--accordion > .dwg-block__col {
+  flex: 1 1 0; /* column ~1/3 width at rest */
+}
+
+/* Hover the big image → it grows, the column shrinks back and dims */
+.dwg-block__grid--accordion > .dwg-block__main:hover {
+  flex-grow: 3.6;
+}
+
+.dwg-block__grid--accordion:has(> .dwg-block__main:hover) > .dwg-block__col {
+  flex-grow: 0.6;
+  filter: brightness(0.6);
+}
+
+/* Hover anywhere in the column → it grows, the big image shrinks and dims */
+.dwg-block__grid--accordion > .dwg-block__col:hover {
+  flex-grow: 2.4;
+}
+
+.dwg-block__grid--accordion:has(> .dwg-block__col:hover) > .dwg-block__main {
+  flex-grow: 0.8;
+  filter: brightness(0.6);
+}
+
+/* Vertical accordion among the three detail tiles */
+.dwg-block__col--accordion > * {
+  transition: flex-grow 0.55s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s ease;
+}
+
+.dwg-block__col--accordion:hover > * {
+  flex-grow: 0.4;
+}
+
+.dwg-block__col--accordion > *:hover {
+  flex-grow: 4;
+}
+
+.dwg-block__col--accordion:hover > *:not(:hover) {
+  filter: brightness(0.55);
+}
+
+/* Inside the accordion the resize *is* the effect — drop the pop-out scale
+   (covers both the big image and the detail tiles). */
+.dwg-block__grid--accordion .dwg-tile:hover .dwg-tile__canvas,
+.dwg-block__grid--accordion .dwg-tile:hover .dwg-tile__img {
+  transform: none;
+  object-fit: contain;
+  box-shadow: 0 6px 22px rgba(8, 20, 45, 0.1);
+}
+
+.dwg-block__grid--accordion .dwg-placeholder:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Portrait column: two vertical (3:4) slots sitting side by side, centered.
+   Selectors name the child classes so they beat .dwg-placeholder/.dwg-tile's
+   own width/height:100% — otherwise the tile fills the column and the
+   aspect-ratio derives an over-large size that overflows into the next block. */
+.dwg-block__col--portrait {
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.dwg-block__col--portrait > .dwg-placeholder,
+.dwg-block__col--portrait > .dwg-tile {
+  flex: 1;          /* each takes half the column width... */
+  min-width: 0;
+  height: 100%;     /* ...and the full height, like the big image */
+}
+
+/* The vertical image itself: full height, natural width (real ratio), centered
+   in its slot — no box-fit letterboxing, the element hugs the image. */
+.dwg-block__col--portrait .dwg-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dwg-block__col--portrait .dwg-tile__canvas,
+.dwg-block__col--portrait .dwg-tile__img {
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ---- Real plan tile (expands on hover) ---- */
+.dwg-tile {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.dwg-tile__canvas,
+.dwg-tile__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* contain (not cover) so the whole drawing is visible at its real ratio —
+     nothing near the edges (title block, dimensions, notes) gets cropped. */
+  object-fit: contain;
+  border-radius: 6px;
+  background: var(--color-offwhite);
+  cursor: pointer;
+  transform-origin: center;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.45s ease;
+  box-shadow: 0 6px 22px rgba(8, 20, 45, 0.1);
+}
+
+.dwg-tile:hover {
+  z-index: 20;
+}
+
+.dwg-tile:hover .dwg-tile__canvas,
+.dwg-tile:hover .dwg-tile__img {
+  object-fit: contain;
+  transform: scale(1.25);
+  box-shadow: 0 20px 55px rgba(8, 20, 45, 0.3);
+}
+
+.dwg-tile__pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  background: #e8e8e0;
+  animation: pulse 1.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ---- Pending-image placeholder (expands on hover, like the real tiles) ---- */
+.dwg-placeholder {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  border: 1px dashed rgba(53, 88, 114, 0.28);
+  background:
+    linear-gradient(135deg, rgba(122, 170, 206, 0.06), rgba(53, 88, 114, 0.04));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  color: var(--color-blue-mid);
+  cursor: pointer;
+  transform-origin: center;
+  transition: border-color 0.3s ease, background 0.3s ease,
+    transform 0.45s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.45s ease;
+}
+
+.dwg-placeholder:hover {
+  z-index: 20;
+  border-color: rgba(53, 88, 114, 0.5);
+  background:
+    linear-gradient(135deg, rgba(122, 170, 206, 0.12), rgba(53, 88, 114, 0.07));
+  transform: scale(1.18);
+  box-shadow: 0 18px 50px rgba(8, 20, 45, 0.22);
+}
+
+.dwg-placeholder svg {
+  width: 30px;
+  height: 30px;
+  opacity: 0.55;
+}
+
+.dwg-placeholder span {
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+@media (max-width: 768px) {
+  .dwg-blocks {
+    padding: 3rem 1.25rem 4rem;
+    gap: 4rem;
+  }
+
+  /* Stack the big image over its three slots */
+  .dwg-block__grid {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .dwg-block__main {
+    height: 60vh;
+  }
+
+  .dwg-block__col {
+    flex-direction: row;
+  }
+
+  .dwg-block__col > * {
+    height: 28vh;
+  }
+
+  .dwg-block__col--portrait > * {
+    flex: 0 0 auto;
+    height: 34vh;
+    width: auto;
+  }
+
+  /* No hover on touch — keep things calm */
+  .dwg-tile:hover .dwg-tile__canvas {
+    transform: none;
+    object-fit: contain;
+  }
+}

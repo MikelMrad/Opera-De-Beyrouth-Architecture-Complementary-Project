@@ -1,9 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import Image from 'next/image';
 import type { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist';
 import Navbar from '@/components/Navbar/Navbar';
 import Footer from '@/components/Footer/Footer';
+import './drawings.css';
 
 interface PageEntry {
   pdfIndex: number;
@@ -21,6 +23,23 @@ const PLANS: Array<{ number: string; label: string }> = [
   { number: 'Façade Sud', label: 'Façade Ouest' },
   { number: 'Façade Est', label: 'Façade Nord' },
   { number: "Coupe AA'", label: "Coupe BB'" },
+];
+
+// One config per gallery block: heading (rewritten from the old vertical
+// left-hand labels), how many pending detail views sit in the right column,
+// and whether those are landscape or portrait. Index 0 = first block, etc.
+type BlockConfig = {
+  meta: string;
+  title: string;
+  slots: number;
+  orient: 'landscape' | 'portrait';
+};
+
+const BLOCKS: BlockConfig[] = [
+  { meta: 'Niveau +3.50', title: 'Rez-de-Chaussée', slots: 3, orient: 'landscape' },
+  { meta: 'Niveaux +8.00 / +13.00', title: 'Les Auditoriums', slots: 3, orient: 'landscape' },
+  { meta: 'Niveau −1.50', title: 'Parking · Niveau 1', slots: 2, orient: 'portrait' },
+  { meta: 'Niveau −5.00', title: 'Parking · Niveau 2', slots: 2, orient: 'portrait' },
 ];
 
 export default function DrawingsPage() {
@@ -62,10 +81,16 @@ export default function DrawingsPage() {
     return () => { cancelled = true; };
   }, []);
 
+  // The first four plans become centered gallery blocks — each one big image
+  // with its own column of three (pending → placeholders). Remaining plans
+  // (façades / sections) stay full-screen below.
+  const blockPages = pages.slice(0, 4);
+  const restPages = pages.slice(4);
+
   return (
     <>
       <Navbar />
-      <div style={{ background: 'var(--color-offwhite)', minHeight: '100vh', paddingTop: 80 }}>
+      <div className="dwg-page">
         {!loaded && (
           <div style={{
             height: '100vh',
@@ -83,7 +108,36 @@ export default function DrawingsPage() {
             }} />
           </div>
         )}
-        {pages.map((entry, idx) => (
+
+        {blockPages.length > 0 && (
+          <div className="dwg-blocks">
+            {blockPages.map((entry, i) => {
+              const cfg = BLOCKS[i];
+              const portrait = cfg?.orient === 'portrait';
+              return (
+                <section className="dwg-block" key={`${entry.pdfIndex}-${entry.pageIndex}`}>
+                  <header className="dwg-block__head">
+                    <span className="dwg-block__meta">{cfg?.meta}</span>
+                    <h2 className="dwg-block__title">{cfg?.title ?? `Plan ${i + 1}`}</h2>
+                  </header>
+
+                  <div className={`dwg-block__grid${portrait ? '' : ' dwg-block__grid--accordion'}`}>
+                    <div className="dwg-block__main">
+                      <GalleryTile entry={entry} />
+                    </div>
+                    <div className={`dwg-block__col${portrait ? ' dwg-block__col--portrait' : ' dwg-block__col--accordion'}`}>
+                      {Array.from({ length: cfg?.slots ?? 3 }).map((_, j) => (
+                        <DetailTile key={j} block={i + 1} slot={j + 1} portrait={portrait} />
+                      ))}
+                    </div>
+                  </div>
+                </section>
+              );
+            })}
+          </div>
+        )}
+
+        {restPages.map((entry) => (
           <PdfPageCanvas
             key={`${entry.pdfIndex}-${entry.pageIndex}`}
             entry={entry}
@@ -97,59 +151,160 @@ export default function DrawingsPage() {
   );
 }
 
-function PdfPageCanvas({
-  entry,
-  number,
-  label,
-}: {
-  entry: PageEntry;
-  number: string;
-  label: string;
-}) {
+/** Empty slot for a detail view that hasn't been added yet; expands on hover. */
+function PlaceholderTile({ portrait = false }: { portrait?: boolean }) {
+  return (
+    <div className={`dwg-placeholder${portrait ? ' dwg-placeholder--portrait' : ''}`}>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="2" />
+        <circle cx="8.5" cy="8.5" r="1.5" />
+        <path d="M21 15l-5-5L5 21" />
+      </svg>
+      <span>À venir</span>
+    </div>
+  );
+}
+
+// Detail-view files live in per-block folders, named by slot:
+//   public/architectural-drawings/block<1..4>/<1..n>.<ext>
+// Images are tried first, then a PDF; a missing slot shows the placeholder.
+const IMAGE_EXTS = ['webp', 'jpg', 'jpeg', 'png'] as const;
+
+/** Resolve true if an image URL loads (also primes the browser cache). */
+function imageExists(url: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    const img = new window.Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url;
+  });
+}
+
+/** Load a PDF document, or null if it isn't there. */
+async function loadPdfDoc(url: string): Promise<PDFDocumentProxy | null> {
+  try {
+    const { GlobalWorkerOptions, getDocument } = await import('pdfjs-dist');
+    GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+    return await getDocument({ url }).promise;
+  } catch {
+    return null;
+  }
+}
+
+type Resolved =
+  | { kind: 'loading' }
+  | { kind: 'image'; url: string }
+  | { kind: 'pdf'; pdf: PDFDocumentProxy }
+  | { kind: 'none' };
+
+/** One column slot: finds its file (image → pdf → none) and renders it. */
+function DetailTile({ block, slot, portrait }: { block: number; slot: number; portrait: boolean }) {
+  const [resolved, setResolved] = useState<Resolved>({ kind: 'loading' });
+  const base = `/architectural-drawings/block${block}/${slot}`;
+
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      for (const ext of IMAGE_EXTS) {
+        const url = `${base}.${ext}`;
+        if (await imageExists(url)) {
+          if (!cancelled) setResolved({ kind: 'image', url });
+          return;
+        }
+        if (cancelled) return;
+      }
+      const pdf = await loadPdfDoc(`${base}.pdf`);
+      if (cancelled) return;
+      setResolved(pdf ? { kind: 'pdf', pdf } : { kind: 'none' });
+    })();
+
+    return () => { cancelled = true; };
+  }, [base]);
+
+  if (resolved.kind === 'loading') {
+    return (
+      <div className="dwg-tile">
+        <div className="dwg-tile__pulse" />
+      </div>
+    );
+  }
+  if (resolved.kind === 'image') {
+    return (
+      <div className="dwg-tile">
+        <Image
+          src={resolved.url}
+          alt=""
+          fill
+          sizes="(max-width: 768px) 50vw, 25vw"
+          className="dwg-tile__img"
+        />
+      </div>
+    );
+  }
+  if (resolved.kind === 'pdf') {
+    return <DetailPdf pdf={resolved.pdf} />;
+  }
+  return <PlaceholderTile portrait={portrait} />;
+}
+
+/** Renders the first page of a detail PDF as a gallery tile. */
+function DetailPdf({ pdf }: { pdf: PDFDocumentProxy }) {
+  const entry = useMemo<PageEntry>(() => ({ pdfIndex: 0, pageIndex: 1, pdf }), [pdf]);
+  return <GalleryTile entry={entry} />;
+}
+
+/**
+ * Renders one PDF page onto a canvas, lazily: it only paints when the canvas
+ * scrolls near the viewport and clears itself when it leaves, to keep memory
+ * bounded across many large plans. Returns the refs + a rendered flag so
+ * different layouts (full-screen vs gallery tile) can share the same logic.
+ */
+function usePdfPageCanvas(entry: PageEntry) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const renderingRef = useRef(false);
   const renderedRef = useRef(false);
   const [isRendered, setIsRendered] = useState(false);
 
-  async function renderPage() {
-    const canvas = canvasRef.current;
-    if (!canvas || renderingRef.current) return;
-    renderingRef.current = true;
-
-    try {
-      const page: PDFPageProxy = await entry.pdf.getPage(entry.pageIndex);
-      const dpr = window.devicePixelRatio || 1;
-      const baseVp = page.getViewport({ scale: 1 });
-      const scale = dpr * (window.innerHeight / baseVp.height);
-      const viewport = page.getViewport({ scale });
-
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
-
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-
-      await page.render({ canvas, canvasContext: ctx, viewport }).promise;
-      renderedRef.current = true;
-      setIsRendered(true);
-    } finally {
-      renderingRef.current = false;
-    }
-  }
-
-  function clearCanvas() {
-    const canvas = canvasRef.current;
-    if (!canvas || !renderedRef.current) return;
-    const ctx = canvas.getContext('2d');
-    ctx?.clearRect(0, 0, canvas.width, canvas.height);
-    renderedRef.current = false;
-    setIsRendered(false);
-  }
-
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+
+    async function renderPage() {
+      const canvas = canvasRef.current;
+      if (!canvas || renderingRef.current) return;
+      renderingRef.current = true;
+
+      try {
+        const page: PDFPageProxy = await entry.pdf.getPage(entry.pageIndex);
+        const dpr = window.devicePixelRatio || 1;
+        const baseVp = page.getViewport({ scale: 1 });
+        const scale = dpr * (window.innerHeight / baseVp.height);
+        const viewport = page.getViewport({ scale });
+
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        await page.render({ canvas, canvasContext: ctx, viewport }).promise;
+        renderedRef.current = true;
+        setIsRendered(true);
+      } finally {
+        renderingRef.current = false;
+      }
+    }
+
+    function clearCanvas() {
+      const canvas = canvasRef.current;
+      if (!canvas || !renderedRef.current) return;
+      const ctx = canvas.getContext('2d');
+      ctx?.clearRect(0, 0, canvas.width, canvas.height);
+      renderedRef.current = false;
+      setIsRendered(false);
+    }
 
     const observer = new IntersectionObserver(
       ([e]) => {
@@ -164,8 +319,33 @@ function PdfPageCanvas({
 
     observer.observe(container);
     return () => observer.disconnect();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [entry]);
+
+  return { containerRef, canvasRef, isRendered };
+}
+
+/** Gallery-style tile: cropped to fill its cell, expands to natural ratio on hover. */
+function GalleryTile({ entry }: { entry: PageEntry }) {
+  const { containerRef, canvasRef, isRendered } = usePdfPageCanvas(entry);
+
+  return (
+    <div ref={containerRef} className="dwg-tile">
+      {!isRendered && <div className="dwg-tile__pulse" />}
+      <canvas ref={canvasRef} className="dwg-tile__canvas" />
+    </div>
+  );
+}
+
+function PdfPageCanvas({
+  entry,
+  number,
+  label,
+}: {
+  entry: PageEntry;
+  number: string;
+  label: string;
+}) {
+  const { containerRef, canvasRef, isRendered } = usePdfPageCanvas(entry);
 
   return (
     <div
