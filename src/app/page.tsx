@@ -17,7 +17,7 @@ export default function HomePage() {
         <div className="home__auditoriums-inner">
           <div className="home__auditoriums-header">
             <p className="home__auditoriums-label">Nos Salles</p>
-            <h2 className="home__auditoriums-title">Choisissez Votre Espace</h2>
+            <h2 className="home__auditoriums-title">Choisissez Votre Place</h2>
           </div>
           <div className="home__auditoriums-grid">
             <AuditoriumCard

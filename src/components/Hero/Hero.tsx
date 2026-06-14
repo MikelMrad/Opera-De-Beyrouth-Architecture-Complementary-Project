@@ -40,9 +40,16 @@ export default function Hero() {
 
   return (
     <section className="hero">
-      {/* IMAGE_1: Front facade of Opéra de Beyrouth
-          Replace .hero__bg background-color with background-image in Hero.css */}
-      <div className="hero__bg" />
+      <video
+        className="hero__bg"
+        src="/hero-video.mp4"
+        poster="/images/banner.png"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+      />
       <div className="hero__overlay" />
 
       <div className="hero__content">
