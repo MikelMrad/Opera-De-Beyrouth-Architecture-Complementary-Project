@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import './PanoramaViewer.css';
 
 interface PanoramaViewerProps {
-  /** Path to the equirectangular (2:1) panorama JPG. */
+  /** Path to the equirectangular (2:1) panorama image (WebP). */
   src: string;
 }
 

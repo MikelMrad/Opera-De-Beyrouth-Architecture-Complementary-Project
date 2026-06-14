@@ -4,31 +4,31 @@
 
 export const generatedSeatViews: Record<string, Record<string, string>> = {
   "chamber": {
-    "A12": "/renders/chamber/A12.jpg",
-    "A19": "/renders/chamber/A19.jpg",
-    "A4": "/renders/chamber/A4.jpg",
-    "K14": "/renders/chamber/K14.jpg",
-    "K23": "/renders/chamber/K23.jpg",
-    "K4": "/renders/chamber/K4.jpg",
-    "L14": "/renders/chamber/L14.jpg",
-    "L23": "/renders/chamber/L23.jpg",
-    "L4": "/renders/chamber/L4.jpg",
-    "T15": "/renders/chamber/T15.jpg",
-    "T25": "/renders/chamber/T25.jpg",
-    "T4": "/renders/chamber/T4.jpg"
+    "A12": "/renders/chamber/A12.webp",
+    "A19": "/renders/chamber/A19.webp",
+    "A4": "/renders/chamber/A4.webp",
+    "K14": "/renders/chamber/K14.webp",
+    "K23": "/renders/chamber/K23.webp",
+    "K4": "/renders/chamber/K4.webp",
+    "L14": "/renders/chamber/L14.webp",
+    "L23": "/renders/chamber/L23.webp",
+    "L4": "/renders/chamber/L4.webp",
+    "T15": "/renders/chamber/T15.webp",
+    "T25": "/renders/chamber/T25.webp",
+    "T4": "/renders/chamber/T4.webp"
   },
   "main": {
-    "A22": "/renders/main/A22.jpg",
-    "A38": "/renders/main/A38.jpg",
-    "A7": "/renders/main/A7.jpg",
-    "J25": "/renders/main/J25.jpg",
-    "J43": "/renders/main/J43.jpg",
-    "J7": "/renders/main/J7.jpg",
-    "K25": "/renders/main/K25.jpg",
-    "K43": "/renders/main/K43.jpg",
-    "K7": "/renders/main/K7.jpg",
-    "R21": "/renders/main/R21.jpg",
-    "R37": "/renders/main/R37.jpg",
-    "R6": "/renders/main/R6.jpg"
+    "A22": "/renders/main/A22.webp",
+    "A38": "/renders/main/A38.webp",
+    "A7": "/renders/main/A7.webp",
+    "J25": "/renders/main/J25.webp",
+    "J43": "/renders/main/J43.webp",
+    "J7": "/renders/main/J7.webp",
+    "K25": "/renders/main/K25.webp",
+    "K43": "/renders/main/K43.webp",
+    "K7": "/renders/main/K7.webp",
+    "R21": "/renders/main/R21.webp",
+    "R37": "/renders/main/R37.webp",
+    "R6": "/renders/main/R6.webp"
   }
 };

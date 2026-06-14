@@ -3,27 +3,16 @@ import { generatedSeatViews } from './seatViews.generated';
 /**
  * Seat → 360° panorama lookup.
  *
- * Real renders are picked up automatically by filename: drop a JPG named after
- * its seat into public/renders/<auditorium>/ (e.g. main/A22.jpg, chamber/G12.png)
+ * Real renders are picked up automatically by filename: drop a WebP named after
+ * its seat into public/renders/<auditorium>/ (e.g. main/A22.webp, chamber/G12.webp)
  * and it maps to that seat on the next dev/build — see scripts/generate-seat-views.mjs.
  *
  * The `manualSeatViews` below are hand-kept fallbacks (shared placeholders for
  * auditoria that don't have real renders yet). Auto-generated entries win on
- * any key conflict, so a real file always overrides a placeholder.
+ * any key conflict, so a real file always overrides a placeholder. Seats with
+ * no entry here fall back to the nearest real render via getClosestView().
  */
-const manualSeatViews: Record<string, Record<string, string>> = {
-  chamber: {
-    'A1':  '/renders/chamber/placeholder.jpg',
-    'A5':  '/renders/chamber/placeholder.jpg',
-    'A10': '/renders/chamber/placeholder.jpg',
-    'B1':  '/renders/chamber/placeholder.jpg',
-    'B5':  '/renders/chamber/placeholder.jpg',
-    'B10': '/renders/chamber/placeholder.jpg',
-    'C1':  '/renders/chamber/placeholder.jpg',
-    'C5':  '/renders/chamber/placeholder.jpg',
-    'C10': '/renders/chamber/placeholder.jpg',
-  },
-};
+const manualSeatViews: Record<string, Record<string, string>> = {};
 
 function mergeViews(
   base: Record<string, Record<string, string>>,

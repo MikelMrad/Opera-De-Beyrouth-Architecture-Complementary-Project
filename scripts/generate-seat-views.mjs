@@ -1,9 +1,9 @@
 // Auto-build the seat → panorama map from the files in public/renders/.
 //
 // Convention: name a render after its seat and drop it in the auditorium's
-// folder — e.g. public/renders/main/A22.jpg or public/renders/chamber/g22.png
-// (case-insensitive). The seat letter is upper-cased, so `g22.png` → seat G22.
-// Files that aren't named after a seat (e.g. placeholder.jpg) are ignored.
+// folder — e.g. public/renders/main/A22.webp or public/renders/chamber/g22.webp
+// (case-insensitive). The seat letter is upper-cased, so `g22.webp` → seat G22.
+// Files that aren't named after a seat (e.g. placeholder.webp) are ignored.
 //
 // Runs automatically via the `predev` / `prebuild` npm scripts; run by hand
 // with `npm run gen:seat-views`.
