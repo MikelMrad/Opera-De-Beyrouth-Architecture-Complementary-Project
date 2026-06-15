@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar/Navbar';
 import Hero from '@/components/Hero/Hero';
+import VideoEmbed from '@/components/VideoEmbed/VideoEmbed';
 import AboutSection from '@/components/AboutSection/AboutSection';
 import AuditoriumCard from '@/components/AuditoriumCard/AuditoriumCard';
 import HorizontalQuotes from '@/components/HorizontalQuotes/HorizontalQuotes';
@@ -11,6 +12,17 @@ export default function HomePage() {
     <>
       <Navbar />
       <Hero />
+
+      <section className="home__video">
+        <div className="home__video-inner">
+          <div className="home__video-header">
+            <p className="home__video-label">La Visite</p>
+            <h2 className="home__video-title">Découvrez l&apos;Opéra en Vidéo</h2>
+          </div>
+          <VideoEmbed vimeoId="1201279550" title="Opéra de Beyrouth — Visite" />
+        </div>
+      </section>
+
       <AboutSection />
 
       <section className="home__auditoriums">

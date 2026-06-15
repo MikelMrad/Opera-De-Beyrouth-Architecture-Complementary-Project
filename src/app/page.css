@@ -1,3 +1,34 @@
+.home__video {
+  background-color: var(--color-offwhite);
+  padding: 5rem 2rem;
+}
+
+.home__video-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.home__video-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.home__video-label {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-blue-mid);
+  margin-bottom: 0.75rem;
+}
+
+.home__video-title {
+  /* h2 → --font-display from globals.css */
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--color-navy);
+}
+
 .home__auditoriums {
   background-color: var(--color-offwhite);
   padding: 5rem 2rem;
@@ -36,6 +67,7 @@
 }
 
 @media (max-width: 768px) {
+  .home__video,
   .home__auditoriums {
     padding: 4rem 1.5rem;
   }
