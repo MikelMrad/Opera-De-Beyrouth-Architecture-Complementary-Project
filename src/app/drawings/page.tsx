@@ -348,110 +348,19 @@ function PdfPageCanvas({
   const { containerRef, canvasRef, isRendered } = usePdfPageCanvas(entry);
 
   return (
-    <div
-      ref={containerRef}
-      style={{
-        width: '100%',
-        height: '100vh',
-        position: 'relative',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20,
-        background: 'var(--color-offwhite)',
-      }}
-    >
-      {/* Pulse placeholder */}
-      {!isRendered && (
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: '#e8e8e0',
-            animation: 'pulse 1.8s ease-in-out infinite',
-          }}
-        />
-      )}
+    <div ref={containerRef} className="dwg-fullplan">
+      {!isRendered && <div className="dwg-fullplan__pulse" />}
 
-      {/* Left label */}
-      <div
-        style={{
-          position: 'absolute',
-          left: '2.5rem',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '1.25rem',
-          zIndex: 2,
-          userSelect: 'none',
-          pointerEvents: 'none',
-        }}
-      >
-        {/* top line */}
-        <div style={{ height: 56, width: 1, background: 'var(--color-navy)', opacity: 0.2 }} />
-
-        {/* plan number */}
-        <span
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: '1rem',
-            fontWeight: 700,
-            letterSpacing: '0.22em',
-            color: 'var(--color-navy)',
-            writingMode: 'vertical-rl',
-            transform: 'rotate(180deg)',
-            lineHeight: 1,
-          }}
-        >
-          {number}
-        </span>
-
-        {/* dot divider */}
-        <div
-          style={{
-            width: 3,
-            height: 3,
-            borderRadius: '50%',
-            background: 'var(--color-navy)',
-            opacity: 0.35,
-            flexShrink: 0,
-          }}
-        />
-
-        {/* plan name */}
-        <span
-          style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: '1rem',
-            fontWeight: 700,
-            letterSpacing: '0.22em',
-            color: 'var(--color-navy)',
-            opacity: 0.6,
-            writingMode: 'vertical-rl',
-            transform: 'rotate(180deg)',
-            lineHeight: 1,
-          }}
-        >
-          {label}
-        </span>
-
-        {/* bottom line */}
-        <div style={{ height: 56, width: 1, background: 'var(--color-navy)', opacity: 0.2 }} />
+      {/* Plan number + name — vertical strip on desktop, caption on top on mobile */}
+      <div className="dwg-fullplan__label">
+        <div className="dwg-fullplan__line" />
+        <span className="dwg-fullplan__text">{number}</span>
+        <div className="dwg-fullplan__dot" />
+        <span className="dwg-fullplan__text dwg-fullplan__text--name">{label}</span>
+        <div className="dwg-fullplan__line" />
       </div>
 
-      {/* PDF canvas */}
-      <canvas
-        ref={canvasRef}
-        style={{
-          display: 'block',
-          height: '100vh',
-          width: 'auto',
-          position: 'relative',
-          zIndex: 1,
-        }}
-      />
+      <canvas ref={canvasRef} className="dwg-fullplan__canvas" />
     </div>
   );
 }

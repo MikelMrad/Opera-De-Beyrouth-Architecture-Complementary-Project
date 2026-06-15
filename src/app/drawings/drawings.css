@@ -258,39 +258,220 @@
   opacity: 0.7;
 }
 
+/* ---- Full-screen plans (façades / sections, plans 5+) ---- */
+.dwg-fullplan {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  background: var(--color-offwhite);
+}
+
+.dwg-fullplan__pulse {
+  position: absolute;
+  inset: 0;
+  background: #e8e8e0;
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+.dwg-fullplan__label {
+  position: absolute;
+  left: 2.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  z-index: 2;
+  user-select: none;
+  pointer-events: none;
+}
+
+.dwg-fullplan__line {
+  width: 1px;
+  height: 56px;
+  background: var(--color-navy);
+  opacity: 0.2;
+}
+
+.dwg-fullplan__dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-navy);
+  opacity: 0.35;
+  flex-shrink: 0;
+}
+
+.dwg-fullplan__text {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--color-navy);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  line-height: 1;
+}
+
+.dwg-fullplan__text--name {
+  opacity: 0.6;
+}
+
+.dwg-fullplan__canvas {
+  display: block;
+  position: relative;
+  z-index: 1;
+  height: 100vh;
+  width: auto;
+}
+
+/* =========================================================================
+   MOBILE — everything stacks full-width, fit-to-width, no hover behaviour
+   ========================================================================= */
 @media (max-width: 768px) {
-  .dwg-blocks {
-    padding: 3rem 1.25rem 4rem;
-    gap: 4rem;
+  .dwg-page {
+    padding-top: 64px;
   }
 
-  /* Stack the big image over its three slots */
-  .dwg-block__grid {
-    grid-template-columns: 1fr;
+  .dwg-blocks {
+    padding: 2.25rem 1rem 3rem;
+    gap: 3rem;
+  }
+
+  .dwg-block__head {
+    margin-bottom: 1.1rem;
+  }
+
+  .dwg-block__title {
+    font-size: 1.45rem;
+  }
+
+  .dwg-block__meta {
+    font-size: 0.66rem;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Stack big plan over its detail tiles — overrides both the grid layout
+     and the desktop accordion's flex row. */
+  .dwg-block__grid,
+  .dwg-block__grid--accordion {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    gap: 14px;
+  }
+
+  /* Kill the desktop hover/accordion sizing + dimming */
+  .dwg-block__grid--accordion > .dwg-block__main,
+  .dwg-block__grid--accordion > .dwg-block__col {
+    flex: 0 0 auto;
+    transition: none;
+    filter: none !important;
+  }
+
+  /* Big plan: fit to width, natural height */
+  .dwg-block__main,
+  .dwg-block__main .dwg-tile {
     height: auto;
   }
 
-  .dwg-block__main {
-    height: 60vh;
+  .dwg-block__main .dwg-tile__canvas,
+  .dwg-block__main .dwg-tile__img {
+    position: relative;
+    width: 100%;
+    height: auto;
   }
 
-  .dwg-block__col {
-    flex-direction: row;
+  /* Detail tiles: tidy 2-up grid, fixed aspect so placeholders and fill
+     images both have height; no hover resize. */
+  .dwg-block__col,
+  .dwg-block__col--portrait {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    height: auto;
+    align-items: start;
   }
 
-  .dwg-block__col > * {
-    height: 28vh;
-  }
-
+  .dwg-block__col > *,
   .dwg-block__col--portrait > * {
-    flex: 0 0 auto;
-    height: 34vh;
-    width: auto;
+    flex: none !important;
+    width: auto !important;
+    height: auto !important;
+    min-width: 0;
+    aspect-ratio: 4 / 3;
   }
 
-  /* No hover on touch — keep things calm */
-  .dwg-tile:hover .dwg-tile__canvas {
+  /* Reset the portrait media tweaks so tiles box-fit on mobile */
+  .dwg-block__col--portrait .dwg-tile {
+    display: block;
+  }
+
+  .dwg-block__col--portrait .dwg-tile__canvas,
+  .dwg-block__col--portrait .dwg-tile__img {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Neutralise every hover/accordion effect on touch */
+  .dwg-tile:hover,
+  .dwg-placeholder:hover {
+    z-index: auto;
+  }
+
+  .dwg-tile:hover .dwg-tile__canvas,
+  .dwg-tile:hover .dwg-tile__img,
+  .dwg-placeholder:hover {
     transform: none;
     object-fit: contain;
+    box-shadow: 0 6px 22px rgba(8, 20, 45, 0.1);
+  }
+
+  .dwg-placeholder:hover {
+    box-shadow: none;
+  }
+
+  .dwg-block__col--accordion:hover > *:not(:hover),
+  .dwg-block__grid--accordion:has(> .dwg-block__main:hover) > .dwg-block__col,
+  .dwg-block__grid--accordion:has(> .dwg-block__col:hover) > .dwg-block__main {
+    filter: none;
+  }
+
+  /* ---- Full-screen plans → fit to width, caption on top ---- */
+  .dwg-fullplan {
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    padding: 0.5rem 1rem 1.5rem;
+    margin-bottom: 0;
+  }
+
+  .dwg-fullplan__label {
+    position: static;
+    transform: none;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .dwg-fullplan__line {
+    display: none;
+  }
+
+  .dwg-fullplan__text {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 0.78rem;
+  }
+
+  .dwg-fullplan__canvas {
+    width: 100%;
+    height: auto;
   }
 }
